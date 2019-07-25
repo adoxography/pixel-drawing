@@ -1,0 +1,41 @@
+#topContent {
+  display: flex;
+}
+
+#sketch, #palette, #program {
+  margin: .5em;
+}
+
+#program {
+  display: inline-block;
+  width: 100%;
+  white-space: pre-wrap;
+  border: 1px solid grey;
+  font-family: monospace;
+  padding: .5em;
+  border-radius: .5em;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+#drawButton {
+  background-color: green;
+}
+
+#saveButton {
+  background-color: blue;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+td {
+  margin: 0 20em;
+}
