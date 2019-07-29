@@ -3,6 +3,7 @@ const CLRS = {
   b:  {name: 'blue',   rgb: [0,   0,   255]},
   r:  {name: 'red',    rgb: [255, 0,   0]},
   g:  {name: 'green',  rgb: [0,   255, 0]},
+  gr: {name: 'grey',   rgb: [80,  80,  80]},
   y:  {name: 'yellow', rgb: [255, 255, 0]},
   pu: {name: 'purple', rgb: [255, 0,   255]},
   o:  {name: 'orange', rgb: [255, 125, 0]},
