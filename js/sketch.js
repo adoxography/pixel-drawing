@@ -1,5 +1,5 @@
 // The number of cells in the grid (height and width)
-const GRID_SIZE = 20;
+let gridSize = 20;
 
 // The pixels to be drawn
 let pixels;
@@ -14,7 +14,7 @@ let programIndex = 0;
 
 let parser = new Parser();
 
-// How wide each pixel will be (calculated based on the GRID_SIZE and width)
+// How wide each pixel will be (calculated based on the gridSize and width)
 let pixelSize;
 
 /**
@@ -28,7 +28,6 @@ function setup() {
   // Set global p5 settings
   stroke(200);
   frameRate(16);
-  pixelSize = width / GRID_SIZE;
   
   // Start up the current program
   prepareDrawing();
@@ -47,6 +46,7 @@ function draw() {
  * Loads in the current program and resets the sketch variables
  */
 function prepareDrawing() {
+  pixelSize = width / gridSize;
   pixels = parse(getProgram());
   col = 0;
   row = 0;
@@ -59,7 +59,7 @@ function prepareDrawing() {
  */
 function clearScreen() {
   background(255);
-  for (let i = 0; i <= GRID_SIZE; i++) {
+  for (let i = 0; i <= gridSize; i++) {
     line(0, i * pixelSize, width, i * pixelSize);
     line(i * pixelSize, 0, i * pixelSize, height);
   }
