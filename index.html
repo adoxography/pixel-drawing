@@ -5,24 +5,18 @@
     <meta name="viewport" content="width=device-width">
     <title>Pixel Drawing</title>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script src="js/lib/vue.min.js"></script>
     <script src="js/lib/p5.min.js"></script>
     <script src="js/lib/p5.dom.min.js"></script>
   </head>
   <body>
-    <div id="topContent">
-      <div id="sketch"></div>
-      <table id="palette">
-        <thead>
-          <tr>
-            <td>Colour</td>
-            <td>Code</td>
-            <td>Preview</td>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div id="program" contenteditable="true">10[c g]
+    <div id="app">
+      <input type="number" v-model="size">
+      <div id="topContent">
+        <pixel-sketch ref="sketch"></pixel-sketch>
+        <pixel-clr-table :clrs="clrs"></pixel-clr-table>
+      </div>
+      <div id="program" ref="programInput" contenteditable="true">10[c g]
 10[g c]
 3[c g]     6r                    4[c g]
 2[g c] g   10r                   c 2[g c]
@@ -42,11 +36,10 @@ c g c      2y 8b 2y              g 2[c g]
 g c g      4k 2[c g] 4k          c 2[g c]
 5[2gr 2br]
 5[2gr 2br]</div>
-    <button id="drawButton">Draw!</button>
-
+      <button id="drawButton" @click="render">Draw!</button>
+    </div>
 
     <script src="js/parser.js"></script>
-    <script src="js/sketch.js"></script>
     <script src="js/script.js"></script>
   </body>
 </html>

@@ -2,7 +2,7 @@
   display: flex;
 }
 
-#sketch, #palette, #program {
+#sketch, .pixel-clr-table, #program {
   margin: .5em;
 }
 

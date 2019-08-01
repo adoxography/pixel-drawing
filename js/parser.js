@@ -95,7 +95,7 @@ class Pixel {
   }
 
   toArray() {
-    return Array(this.number).fill(getClr(this.clr));
+    return Array(this.number).fill(this.clr);
   }
 }
 

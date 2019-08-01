@@ -82,3 +82,4 @@ However, this can be confusing to look at, so instead of having a newline (the *
 ## Licenses
 * This project: [MIT](https://github.com/adoxography/pixel-drawing/blob/master/LICENSE)
 * The [p5.js](https://github.com/processing/p5.js) library: [GNU Lesser General Public License v2.1](https://github.com/processing/p5.js/blob/master/license.txt)
+* The [vue.js](https://vuejs.org) library: [MIT](https://github.com/vuejs/vue/blob/dev/LICENSE)
