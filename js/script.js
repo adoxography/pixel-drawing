@@ -145,12 +145,6 @@ new Vue({
     }
   },
 
-  computed: {
-    program() {
-      return this.$refs.programInput.innerText;
-    }
-  },
-
   mounted() {
     const program = localStorage.getItem('pixel-drawing');
 
@@ -163,9 +157,10 @@ new Vue({
 
   methods: {
     render() {
-      let pixels = this.parse(this.program);
+      let program = this.getProgram();
+      let pixels = this.parse(program);
       this.$refs.sketch.render(pixels, this.size);
-      this.save();
+      this.save(program);
     },
 
     parse(string) {
@@ -174,8 +169,12 @@ new Vue({
       return program.toArray().map(c => c ? this.clrs[c].rgb : null);
     },
 
-    save() {
-      localStorage.setItem('pixel-drawing', this.program);
+    save(program) {
+      localStorage.setItem('pixel-drawing', program);
+    },
+
+    getProgram() {
+      return this.$refs.programInput.innerText;
     }
   }
 });
