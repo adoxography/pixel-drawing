@@ -79,12 +79,13 @@ Vue.component('pixel-sketch', {
         this.firstPixel = false;
       }
 
-      while (this.pixels && !(pixel = this.pixels.shift())) {
+      // Handle newlines
+      while (this.pixels.length && !(pixel = this.pixels.shift())) {
         this.row++;
         this.col = 0;
       }
 
-      if (!this.pixels) {
+      if (!this.pixels.length) {
         return;
       }
 
