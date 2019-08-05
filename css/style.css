@@ -1,3 +1,7 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
 .program-container .program-input {
   display: inline-block;
   white-space: pre-wrap;
