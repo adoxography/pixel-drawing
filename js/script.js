@@ -1,5 +1,5 @@
 const p5Sketch = Vue.component('p5-sketch', {
-  template: `<div id="p5-sketch"></div>`,
+  template: `<div class="p5-sketch" id="p5-sketch"></div>`,
 
   props: {
     width: {default: 400},
@@ -103,7 +103,7 @@ Vue.component('pixel-sketch', {
 });
 
 Vue.component('pixel-clr-table', {
-  template: `<table class="pixel-clr-table">
+  template: `<table class="pixel-clr-table table is-bordered">
   <thead>
     <tr>
       <td>Colour</td>
@@ -129,6 +129,7 @@ new Vue({
   data: {
     size: 20,
     parser: new Parser(),
+    panelShown: true,
     // The accepted colours for programs and their definitions
     clrs: {
       b:  {name: 'blue',   rgb: [0,   0,   255]},

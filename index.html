@@ -4,19 +4,68 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Pixel Drawing</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <script src="js/lib/vue.min.js"></script>
     <script src="js/lib/p5.min.js"></script>
     <script src="js/lib/p5.dom.min.js"></script>
   </head>
   <body>
-    <div id="app">
-      <input type="number" v-model="size">
-      <div id="topContent">
-        <pixel-sketch ref="sketch"></pixel-sketch>
-        <pixel-clr-table :clrs="clrs"></pixel-clr-table>
+    <section class="hero is-primary">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            Pixel Drawing
+          </h1>
+        </div>
       </div>
-      <div id="program" ref="programInput" contenteditable="true">10[c g]
+    </section>
+
+    <section class="section" style="background-color: #e7fdfb">
+      <div class="content">
+        <div id="app" class="box">
+
+          <div class="columns">
+            <div class="column">
+
+              <div class="columns">
+                <div class="column is-narrow">
+                  <div style="min-width: 1em">
+                    <a href="#">
+                      <span class="icon" @click="panelShown = !panelShown" :title="panelShown ? 'Hide panel' : 'Show panel'">
+                        <i class="fa fa-chevron-right can-rotate" :class="{rotated: !panelShown}"></i>
+                      </span>
+                    </a>
+                    <transition name="slide-fade">
+                      <div v-if="panelShown">
+                        <pixel-clr-table :clrs="clrs"></pixel-clr-table>
+                        <div class="field">
+                          <label class="label" for="size-input">Number of pixels</label>
+                          <input id="size-input" type="number" class="input" v-model="size">
+
+                          <div class="links">
+                            <a href="https://github.com/adoxography/pixel-drawing" target="_blank">
+                              <span class="icon is-medium" title="GitHub">
+                                <i class="fa fa-2x fa-github"></i>
+                              </span>
+                            </a>
+
+                            <a href="https://www.canadalearningcode.ca" target="_blank">
+                              <span class="icon is-medium" title="Canada Learning Code">
+                                <i class="fa fa-2x fa-slack" style="transform: rotate(-28deg)"></i>
+                              </span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </transition>
+                  </div>
+                </div>
+
+                <div class="column program-container">
+                  <div class="field">
+                    <div class="program-input textarea" ref="programInput" contenteditable="true">10[c g]
 10[g c]
 3[c g]     6r                    4[c g]
 2[g c] g   10r                   c 2[g c]
@@ -36,8 +85,57 @@ c g c      2y 8b 2y              g 2[c g]
 g c g      4k 2[c g] 4k          c 2[g c]
 5[2gr 2br]
 5[2gr 2br]</div>
-      <button id="drawButton" @click="render">Draw!</button>
-    </div>
+                    </div>
+                  <button class="draw-button button is-primary" @click="render">Draw!</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="column is-narrow">
+              <pixel-sketch ref="sketch"></pixel-sketch>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="background-color: #8af9f3">
+      <div class="content">
+        <h2 class="title is-2">About</h2>
+        <p>This program is based on an unplugged activity called <a href="https://docs.google.com/document/d/1S__G3fasIgUhkeCkbC91TXHmhOF_MgwdKarz80bsvFE/edit?usp=sharing">Pixel Programming</a> from <a href="https://www.canadalearningcode.ca">Canada Learning Code</a>. It uses a simple domain-specific language (DSL) to demonstrate how simple instructions can be given to a computer.</p>
+
+        <h2 class="title is-2">Syntax</h2>
+        <h3 class="title is-3">Expressions</h3>
+        <p>The simplest <strong>expression</strong> is just a colour code; for example, this program would draw a single red pixel in the top left corner:</p>
+        <pre><code>r</code></pre>
+        <p>Multiple expressions can be given on a single line. Just put a space between them! This program would draw three red pixels:</p>
+        <pre><code>r r r</code></pre>
+        <p>We can shorten this program, though, by specifying a number in front of the colour code. This program is equivalent to the one above:</p>
+        <pre><code>1r 1r 1r</code></pre>
+        <p>The shortened version looks like this:</p>
+        <pre><code>3r</code></pre>
+        <p>To draw on multiple lines, just add more lines to the program. This program would draw a 3x3 red square in the top left corner:</p>
+        <pre><code>3r
+3r
+3r</code></pre>
+
+        <h3 class="title is-3">Loops</h3>
+        <p>Using numbered expressions is already a kind of loop, but there is syntax for more advanced loops. Take this program, for example:</p>
+        <pre><code>2r 2y 2r 2y 2r 2y</code></pre>
+        <p>Here, the program <code>2r 2y</code> is repeated three times. This program does exactly that:</p>
+        <pre><code>3[2r 2y]</code></pre>
+        <p>Looping can be done over multi-line programs as well. For example, this program is really expressing a multi-line loop:</p>
+        <pre><code>r y
+r y
+r y</code></pre>
+        <p>Using the looping syntax, it can be rewritten like this:</p>
+        <pre><code>3[r y
+]</code></pre>
+        <p>However, this can be confusing to look at, so instead of having a newline (the **Enter** key) to indicate moving to the next line, you can instead use a semicolon (<code>;</code>):</p>
+        <pre><code>3[r y;]</code></pre>
+      </div>
+    </section>
 
     <script src="js/parser.js"></script>
     <script src="js/script.js"></script>

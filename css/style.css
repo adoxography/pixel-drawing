@@ -1,41 +1,67 @@
-#topContent {
-  display: flex;
-}
-
-#sketch, .pixel-clr-table, #program {
-  margin: .5em;
-}
-
-#program {
+.program-container .program-input {
   display: inline-block;
-  width: 100%;
   white-space: pre-wrap;
-  border: 1px solid grey;
   font-family: monospace;
-  padding: .5em;
-  border-radius: .5em;
+}
+
+.program-container .draw-button {
+  /* background-color: green; */
+  width: 4em;
+  align-self: flex-end;
+}
+
+.links {
+  margin-top: 1em;
 }
 
 pre {
   white-space: pre-wrap;
 }
 
-#drawButton {
-  background-color: green;
-}
-
-#saveButton {
-  background-color: blue;
-}
-
-table {
-  border-collapse: collapse;
-}
-
-table, th, td {
-  border: 1px solid black;
-}
-
 td {
   margin: 0 20em;
+}
+
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: all .3s ease;
+}
+
+.slide-fade-leave-to {
+  transform: translateX(-10em);
+  opacity: 0;
+}
+
+.slide-fade-enter {
+  transform: translateX(-10em);
+  opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: all .3s ease;
+}
+
+.fade-leave-to, .fade-enter {
+  opacity: 0;
+}
+
+.can-rotate {
+  transform: rotate(0deg);
+  transition: transform 0.3s linear;
+}
+
+.can-rotate.rotated {
+  transform: rotate(90deg);
+  transition: transform 0.3s linear;
+}
+
+a {
+  color: #ed3833;
+}
+
+.hero.is-primary, .button.is-primary {
+  background-color: #ed3833;
+}
+
+pre code {
+  color: #ff3860;
 }
