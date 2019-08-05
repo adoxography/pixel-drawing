@@ -2,12 +2,13 @@
   display: inline-block;
   white-space: pre-wrap;
   font-family: monospace;
+  height: 100%;
+  overflow-y: scroll;
 }
 
 .program-container .draw-button {
-  /* background-color: green; */
   width: 4em;
-  align-self: flex-end;
+  float: right;
 }
 
 .links {
