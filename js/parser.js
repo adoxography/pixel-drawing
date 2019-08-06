@@ -55,7 +55,7 @@ class Parser {
           throw new Error('Unexpected ]');
         }
         stack.pop();
-      } else if (token === ';') {
+      } else if (token === END_OF_LINE) {
         stack.last().add(new Newline());
       } else {
         throw new Error(`Unexpected token '${token}'`);

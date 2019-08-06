@@ -167,7 +167,7 @@ new Vue({
 
     parse(string) {
       console.log(string);
-      let program = this.parser.parse(string.replace(/\n/g, ';'));
+      let program = this.parser.parse(string);
       return program.toArray().map(c => c ? this.clrs[c].rgb : null);
     },
 
