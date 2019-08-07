@@ -85,7 +85,7 @@ Vue.component('pixel-sketch', {
         this.col = 0;
       }
 
-      if (!this.pixels.length) {
+      if (!pixel && !this.pixels.length) {
         return;
       }
 
