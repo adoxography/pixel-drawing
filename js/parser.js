@@ -52,7 +52,7 @@ class Parser {
         stack.push(loop);
       } else if (token === ']') {
         if (!(stack.last() instanceof Loop)) {
-          throw new Error('Unexpected ]');
+          throw new Error("Unexpected ']'");
         }
         stack.pop();
       } else if (token === END_OF_LINE) {
@@ -63,7 +63,7 @@ class Parser {
     }
 
     if (stack.length > 1) {
-      throw new Error('Unmatched [');
+      throw new Error("Unmatched '['");
     }
 
     return program;

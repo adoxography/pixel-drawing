@@ -130,6 +130,7 @@ new Vue({
     size: 20,
     parser: new Parser(),
     panelShown: true,
+    errorMessage: null,
     // The accepted colours for programs and their definitions
     clrs: {
       b:  {name: 'blue',   rgb: [0,   0,   255]},
@@ -161,14 +162,42 @@ new Vue({
     render() {
       let program = this.getProgram();
       let pixels = this.parse(program);
-      this.$refs.sketch.render(pixels, this.size);
-      this.save(program);
+
+      if (pixels) {
+        this.$refs.sketch.render(pixels, this.size);
+        this.save(program);
+      }
     },
+
+    onInput(e) {
+      this.errorMessage = null;
+      this.validate(e.target.innerText);
+    },
+
+    validate: debounce(function (string) {
+      try {
+        let program = this.parser.parse(string).toArray();
+
+        for (let pixel of program) {
+          if (pixel && !this.clrs.hasOwnProperty(pixel)) {
+            this.errorMessage = `Unknown colour '${pixel}'`;
+            break;
+          }
+        }
+      } catch (err) {
+        this.errorMessage = err.message;
+      }
+    }, 500),
 
     parse(string) {
       console.log(string);
-      let program = this.parser.parse(string);
-      return program.toArray().map(c => c ? this.clrs[c].rgb : null);
+      let program = this.parser.parse(string).toArray();
+
+      if (program.some(pixel => pixel && !this.clrs.hasOwnProperty(pixel))) {
+        return null;
+      }
+
+      return program.map(c => c ? this.clrs[c].rgb : null);
     },
 
     save(program) {

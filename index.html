@@ -66,7 +66,8 @@
 
                 <div class="column program-container">
                   <div class="field">
-                    <div class="program-input textarea" ref="programInput" contenteditable="true">2[10[c g]];
+                    <div class="program-input textarea" ref="programInput" @input="onInput" contenteditable="true">10[c g];
+10[g c];
 3[c g]     6r                    4[c g];
 2[g c] g   10r                   c 2[g c];
 2[c g] c   3br 3y k y            g 3[c g];
@@ -85,7 +86,8 @@ c g c      2y 8b 2y              g 2[c g];
 g c g      4k 2[c g] 4k          c 2[g c];
 2[5[2gr 2br];]</div>
                     </div>
-                  <button class="draw-button button is-primary" @click="render">Draw!</button>
+                    <p v-show="errorMessage" class="has-text-danger">Error: {{ errorMessage }}</p>
+                  <button class="draw-button button is-primary" @click="render" :disabled="errorMessage">Draw!</button>
                 </div>
               </div>
             </div>
@@ -135,6 +137,7 @@ r y;</code></pre>
       </div>
     </section>
 
+    <script src="js/util.js"></script>
     <script src="js/parser.js"></script>
     <script src="js/script.js"></script>
   </body>
