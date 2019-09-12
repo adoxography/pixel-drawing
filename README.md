@@ -11,7 +11,7 @@ Pixel drawing is hosted on github; you can work with it online [here](https://ad
 The entire program is self-contained in the repository. Just download it (e.g. `git clone https://github.com/adoxography/pixel-drawing`) and open `index.html` in your browser of choice.
 
 ## Syntax
-See [syntax.md](docs/sytax.md)
+See [syntax.md](docs/syntax.md)
 
 ## Licenses
 * This project: [MIT](https://github.com/adoxography/pixel-drawing/blob/master/LICENSE)
