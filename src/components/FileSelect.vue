@@ -1,13 +1,15 @@
 <template>
   <Modal title="Choose a file" ref="modal" @close="close">
-    <select v-model="selection">
-      <option
-        v-for="option in options"
-        :key="option"
-        >
-        {{ option }}
-      </option>
-    </select>
+    <div class="select">
+      <select v-model="selection">
+        <option
+          v-for="option in options"
+          :key="option"
+          >
+          {{ option }}
+        </option>
+      </select>
+    </div>
 
     <template v-slot:footer>
       <button
