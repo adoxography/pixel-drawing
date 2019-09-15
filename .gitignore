@@ -1,0 +1,7 @@
+/node_modules/
+/dist/
+npm-dubug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+.ignore

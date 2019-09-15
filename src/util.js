@@ -7,3 +7,7 @@ const debounce = (func, delay) => {
     timer = setTimeout(() => func.apply(context, args), delay);
   }
 };
+
+module.exports = {
+  debounce
+};

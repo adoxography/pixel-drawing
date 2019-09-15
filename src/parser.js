@@ -119,3 +119,5 @@ class Newline {
     return [null];
   }
 }
+
+module.exports = Parser;

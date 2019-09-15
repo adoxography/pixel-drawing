@@ -1,0 +1,58 @@
+@charset 'utf-8';
+
+@import './variables';
+
+$family-sans-serif: 'Open Sans', sans-serif;
+
+$body-background-color: #e7fdfb;
+
+.program-container {
+    .program-input {
+        display: inline-block;
+        white-space: pre-wrap;
+        font-family: monospace;
+        height: 100%;
+        overflow-y: scroll;
+    }
+
+    .draw-button {
+        width: 4em;
+        float: right;
+    }
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+.slide-fade-enter-active, .slide-fade-leave-active {
+    transition: all .3s ease;
+}
+
+.slide-fade-leave-to {
+    transform: translateX(-10em);
+    opacity: 0;
+}
+
+.slide-fade-enter {
+    transform: translateX(-10em);
+    opacity: 0;
+}
+
+.can-rotate {
+    transform: rotate(0deg);
+    transition: transform 0.3s linear;
+
+    &.rotated {
+        transform: rotate(90deg);
+        transition: transform 0.3s linear;
+    }
+}
+
+@import '~bulma/sass/utilities/_all.sass';
+@import '~bulma/sass/base/_all.sass';
+@import '~bulma/sass/elements/_all.sass';
+@import '~bulma/sass/components/_all.sass';
+@import '~bulma/sass/layout/_all.sass';
+@import '~bulma/sass/form/_all.sass';
+@import '~bulma/sass/grid/_all.sass';
