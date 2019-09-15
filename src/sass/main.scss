@@ -19,6 +19,12 @@ $family-sans-serif: 'Open Sans', sans-serif;
     }
 }
 
+.github-banner {
+    position: absolute;
+    right: 0;
+    z-index: 1000;
+}
+
 pre {
     white-space: pre-wrap;
 }
