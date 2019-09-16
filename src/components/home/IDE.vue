@@ -88,10 +88,11 @@ import Sketch from '@/components/Sketch';
 import Editor from '@/components/Editor';
 import FileSelect from '@/components/FileSelect';
 import Toolbar from '@/components/Toolbar';
+import { mapActions, mapGetters } from 'vuex';
 
+import programApi from '@/api/programs';
 import defaults from '@/defaults';
 import { debounce } from '@/util';
-import { allPrograms, generateKey, generateName, getProgram, renameProgram, saveProgram } from '@/io';
 import Parser from '@/parser';
 
 export default {
@@ -130,9 +131,7 @@ export default {
   },
 
   computed: {
-    slug() {
-      return generateKey(this.name);
-    }
+    ...mapGetters('programs', [ 'allPrograms' ])
   },
 
   created() {
@@ -147,14 +146,21 @@ export default {
       this.program = data.program;
     }
 
-    this.savedFiles = allPrograms();
+    this.savedFiles = this.allPrograms;
   },
 
   mounted() {
+    this.getAllPrograms();
     this.render();
   },
 
   methods: {
+    ...mapActions('programs', [
+      'saveProgram',
+      'renameProgram',
+      'getAllPrograms'
+    ]),
+
     render() {
       const pixels = this.parse(this.program);
 
@@ -203,7 +209,7 @@ export default {
     },
 
     save() {
-      saveProgram(this.slug, {
+      this.saveProgram(this.name, {
         program: this.program,
         settings: this.settings
       });
@@ -216,25 +222,24 @@ export default {
     },
 
     loadFile(name) {
-      const programData = getProgram(name);
-      this.program = programData.program;
-      this.settings = programData.settings;
-      this.name = name;
-      this.showFileSelect = false;
-      localStorage.setItem('pixel-last-program', name);
+      programApi.getProgram(name)
+        .then(programData => {
+          this.program = programData.program;
+          this.settings = programData.settings;
+          this.name = name;
+          this.showFileSelect = false;
+          localStorage.setItem('pixel-last-program', name);
+        });
     },
 
     newSketch() {
-      this.name = generateName('Untitled');
+      this.name = 'Untitled';
       this.program = '';
       this.save();
     },
 
-    updateName(initialName) {
-      const oldSlug = this.slug;
-      this.name = generateName(initialName);
-
-      renameProgram(oldSlug, this.slug);
+    updateName(newName) {
+      this.renameProgram(this.name, newName);
     }
   }
 };

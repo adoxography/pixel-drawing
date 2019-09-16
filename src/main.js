@@ -13,17 +13,18 @@ require('@/sass/main.scss');
 
 import App from './App';
 import routes from './routes';
+import store from './store';
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
   routes,
-  linkActiveClass: 'active',
-  // mode: 'history'
+  linkActiveClass: 'active'
 });
 
 new Vue({
   el: '#app',
   render: h => h(App),
-  router
+  router,
+  store
 });
