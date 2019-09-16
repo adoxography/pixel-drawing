@@ -19,6 +19,7 @@
   "homepage": "https://adoxography.github.io/pixel-drawing",
   "dependencies": {
     "bulma": "^0.7.5",
+    "bulma-slider": "^2.0.0",
     "gh-pages": "^2.1.1",
     "p5": "^0.9.0",
     "vue": "^2.6.10",

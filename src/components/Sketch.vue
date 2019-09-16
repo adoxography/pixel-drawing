@@ -13,7 +13,8 @@ export default {
       pixelSize: 0,
       pixels: [],
       size: 0,
-      pixelSize: 0
+      pixelSize: 0,
+      frameRate: 16
     };
   },
 
@@ -26,15 +27,17 @@ export default {
       return () => {
         p.createCanvas(this.width, this.height);
         p.stroke(200);
-        p.frameRate(16);
       };
     },
 
     draw(p) {
-      return () => this.drawNextPixel(p);
+      return () => {
+        p.frameRate(this.frameRate);
+        this.drawNextPixel(p);
+      };
     },
 
-    render(pixels, size) {
+    render(pixels, size, frameRate) {
       this.size = size;
       this.pixels = pixels;
       this.pixelSize = this.width / size;
@@ -42,6 +45,7 @@ export default {
       this.firstPixel = true;
       this.row = 0;
       this.col = 0;
+      this.frameRate = frameRate;
 
       this.$forceUpdate();
     },

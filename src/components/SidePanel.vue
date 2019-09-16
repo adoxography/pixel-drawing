@@ -12,7 +12,7 @@
           id="size-input"
           type="number"
           class="input"
-          v-model="value.size"
+          v-model.number="value.size"
           @input="handleSizeInput($event.target.value)"
         />
       </div>

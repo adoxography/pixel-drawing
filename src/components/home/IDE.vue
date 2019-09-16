@@ -16,6 +16,14 @@
             <transition name="slide-fade">
               <div v-if="panelShown">
                 <pixel-side-panel v-model="settings" />
+                <div class="field">
+                  <label class="label">
+                    Frame Rate
+                  </label>
+                  <p class="control">
+                    <input type="range" step="1" min="1" max="60" class="slider" v-model.number="frameRate" />
+                  </p>
+                </div>
               </div>
             </transition>
           </div>
@@ -144,6 +152,8 @@ export default {
         }
       },
 
+      frameRate: 16,
+
       errorMessage: null
     };
   },
@@ -171,7 +181,11 @@ export default {
       const pixels = this.parse(this.program);
 
       if (pixels) {
-        this.$refs.sketch.render(pixels, this.settings.size);
+        this.$refs.sketch.render(
+          pixels,
+          this.settings.size,
+          this.frameRate
+        );
         // this.save(this.program);
       }
     },
