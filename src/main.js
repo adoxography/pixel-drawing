@@ -1,27 +1,22 @@
 'use strict';
 
 import Vue from 'vue';
-import VueRouter from 'vue-router';
 
 import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-library.add(fas, fab);
-dom.watch();
+
+import App from './App';
+import router from './routes';
+import store from './store';
 
 require('@/sass/main.scss');
 
-import App from './App';
-import routes from './routes';
-import store from './store';
+// Set up fontawesome
+library.add(fas, fab);
+dom.watch();
 
-Vue.use(VueRouter);
-
-const router = new VueRouter({
-  routes,
-  linkActiveClass: 'active'
-});
-
+// Initialize Vue instance
 new Vue({
   el: '#app',
   render: h => h(App),

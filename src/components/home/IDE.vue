@@ -137,12 +137,7 @@ export default {
     const name = localStorage.getItem('pixel-last-program');
 
     if (name !== null) {
-      console.log(name);
-      const data = JSON.parse(localStorage.getItem('pixel-file-'+name));
-
-      this.name = name;
-      this.settings = data.settings;
-      this.program = data.program;
+      this.loadFile(name);
     }
 
     this.savedFiles = this.allPrograms;

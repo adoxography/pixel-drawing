@@ -54,5 +54,6 @@ const renameProgram = (oldKey, newKey) => {
 export default {
   allKeys,
   getProgram,
-  renameProgram
+  renameProgram,
+  saveProgram
 };

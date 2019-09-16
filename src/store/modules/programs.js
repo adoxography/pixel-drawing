@@ -40,7 +40,7 @@ const actions = {
   saveProgram({ commit }, key, data) {
     commit('saveProgramRequest', key);
 
-    programApi.save(key, data)
+    programApi.saveProgram(key, data)
       .then(
         () => commit('saveProgramSuccess', key),
         error => commit('saveProgramFailure', error)
@@ -91,7 +91,7 @@ const mutations = {
     state.all.items.push(key);
   },
 
-  saveProgramError(state, error) {},
+  saveProgramFailure(state, error) {},
 
   loadProgramRequest(state, key) {
     state.current = { name: key };
