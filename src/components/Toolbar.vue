@@ -4,6 +4,7 @@
       <a
         v-for="(button, index) in buttons"
         :key="index"
+        :title="button.title"
         class="button icon"
         @click="handleClick(button.action)"
       >

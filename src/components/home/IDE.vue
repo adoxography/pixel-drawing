@@ -118,9 +118,9 @@ export default {
       savedFiles: [],
 
       toolbarButtons: [
-        { icon: 'save', action: this.save },
-        { icon: 'folder-open', action: this.handleOpenClicked },
-        { icon: 'plus', action: this.newSketch },
+        { icon: 'plus', title: 'New', action: this.newSketch },
+        // { icon: 'save', action: this.save },
+        // { icon: 'folder-open', action: this.handleOpenClicked },
         // { icon: 'download' },
         // { icon: 'upload' },
         // { icon: 'file-export' },
