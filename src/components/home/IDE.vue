@@ -205,7 +205,7 @@ export default {
         const program = this.parser.parse(string).toArray();
 
         for (const pixel of program) {
-          if (pixel && !this.clrs.hasOwnProperty(pixel)) {
+          if (pixel && !Object.prototype.hasOwnProperty.call(this.clrs, pixel)) {
             this.errorMessage = `Unknown colour '${pixel}'`;
             break;
           }
@@ -219,11 +219,13 @@ export default {
       console.log(string);
       const program = this.parser.parse(string).toArray();
 
-      if (program.some(pixel => pixel && !this.settings.clrs.hasOwnProperty(pixel))) {
+      if (program.some(pixel => {
+        return pixel
+          && !Object.prototype.hasOwnProperty.call(this.settings.clrs, pixel);
+      })) {
         return null;
       }
 
-      console.log(program.map(c => c ? this.settings.clrs[c].rgb : null));
       return program.map(c => c ? this.settings.clrs[c].rgb : null);
     },
 
