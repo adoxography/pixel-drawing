@@ -89,6 +89,7 @@ import Editor from '@/components/Editor';
 import FileSelect from '@/components/FileSelect';
 import Toolbar from '@/components/Toolbar';
 
+import defaults from '@/defaults';
 import { debounce } from '@/util';
 import { allPrograms, generateKey, generateName, getProgram, renameProgram, saveProgram } from '@/io';
 import Parser from '@/parser';
@@ -104,62 +105,27 @@ export default {
 
   data() {
     return {
+      name: defaults.name,
+      program: defaults.program,
+      settings: defaults.settings,
+      frameRate: defaults.frameRate,
+
       panelShown: true,
-      name: 'Jump Man',
-      program: '',
-      savedFiles: [],
       showFileSelect: false,
-
-      toolbarButtons: [
-        {
-          icon: 'save',
-          action: this.save
-        },
-        {
-          icon: 'folder-open',
-          action: this.handleOpenClicked
-        },
-        {
-          icon: 'plus',
-          action: this.newSketch
-        },
-        // {
-        //   icon: 'download'
-        // },
-        // {
-        //   icon: 'upload'
-        // },
-        // {
-        //   icon: 'file-export'
-        // },
-        // {
-        //   icon: 'copy'
-        // }
-      ],
-
+      errorMessage: null,
       parser: new Parser(),
 
-      settings: {
-        size: 20,
-        clrs: {
-          b:  { name: 'blue',   rgb: [ 0,   0,   255 ] },
-          r:  { name: 'red',    rgb: [ 255, 0,   0 ] },
-          g:  { name: 'green',  rgb: [ 0,   255, 0 ] },
-          gr: { name: 'grey',   rgb: [ 80,  80,  80 ] },
-          y:  { name: 'yellow', rgb: [ 255, 255, 0 ] },
-          pu: { name: 'purple', rgb: [ 255, 0,   255 ] },
-          o:  { name: 'orange', rgb: [ 255, 125, 0 ] },
-          c:  { name: 'cyan',   rgb: [ 0,   255, 255 ] },
-          w:  { name: 'white',  rgb: [ 255, 255, 255 ] },
-          k:  { name: 'black',  rgb: [ 0,   0,   0 ] },
-          br: { name: 'brown',  rgb: [ 125, 80,  0 ] },
-          pi: { name: 'pink',   rgb: [ 255, 80, 125 ] }
-        }
-      },
+      savedFiles: [],
 
-      frameRate: 16,
-
-      errorMessage: null
+      toolbarButtons: [
+        { icon: 'save', action: this.save },
+        { icon: 'folder-open', action: this.handleOpenClicked },
+        { icon: 'plus', action: this.newSketch },
+        // { icon: 'download' },
+        // { icon: 'upload' },
+        // { icon: 'file-export' },
+        // { icon: 'copy' }
+      ]
     };
   },
 
@@ -169,15 +135,22 @@ export default {
     }
   },
 
-  mounted() {
-    const program = localStorage.getItem('pixel-drawing');
+  created() {
+    const name = localStorage.getItem('pixel-last-program');
 
-    if (program !== null) {
-      this.program = program;
+    if (name !== null) {
+      console.log(name);
+      const data = JSON.parse(localStorage.getItem('pixel-file-'+name));
+
+      this.name = name;
+      this.settings = data.settings;
+      this.program = data.program;
     }
 
     this.savedFiles = allPrograms();
+  },
 
+  mounted() {
     this.render();
   },
 
@@ -234,6 +207,8 @@ export default {
         program: this.program,
         settings: this.settings
       });
+
+      localStorage.setItem('pixel-last-program', this.name);
     },
 
     handleOpenClicked() {
@@ -246,6 +221,7 @@ export default {
       this.settings = programData.settings;
       this.name = name;
       this.showFileSelect = false;
+      localStorage.setItem('pixel-last-program', name);
     },
 
     newSketch() {
