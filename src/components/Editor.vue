@@ -1,8 +1,8 @@
 <template>
   <div
     contenteditable="true"
-    @blur="handleInput"
     class="program-input textarea"
+    @blur="handleInput"
     v-text="value"
   />
 </template>

@@ -1,11 +1,15 @@
 <template>
-  <Modal title="Choose a file" ref="modal" @close="close">
+  <Modal
+    ref="modal"
+    title="Choose a file"
+    @close="close"
+  >
     <div class="select">
       <select v-model="selection">
         <option
           v-for="option in options"
           :key="option"
-          >
+        >
           {{ option }}
         </option>
       </select>

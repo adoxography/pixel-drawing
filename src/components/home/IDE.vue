@@ -6,9 +6,9 @@
           <div style="min-width: 1em">
             <a
               class="icon can-rotate"
-              @click="panelShown = !panelShown"
               :class="{ 'rotated': !panelShown }"
               :title="panelShown ? 'Hide Panel' : 'Show Panel'"
+              @click="panelShown = !panelShown"
             >
               <i class="fas fa-chevron-right"></i>
             </a>
@@ -21,7 +21,14 @@
                     Frame Rate
                   </label>
                   <p class="control">
-                    <input type="range" step="1" min="1" max="60" class="slider" v-model.number="frameRate" />
+                    <input
+                      v-model.number="frameRate"
+                      type="range"
+                      step="1"
+                      min="1"
+                      max="60"
+                      class="slider"
+                    >
                   </p>
                 </div>
               </div>
@@ -35,8 +42,8 @@
           <div class="field">
             <span class="control">
               <input
-                class="input"
                 v-model="name"
+                class="input"
                 @blur="updateName($event.target.value)"
               >
             </span>
@@ -54,27 +61,25 @@
 
           <button
             class="draw-button button is-primary"
-            @click="render"
             :disabled="errorMessage"
+            @click="render"
           >
             Draw!
           </button>
         </div>
       </div>
-
     </div>
     <div class="column is-narrow">
       <pixel-sketch ref="sketch" />
     </div>
 
     <pixel-file-select
-      :options="savedFiles"
       v-show="showFileSelect"
+      :options="savedFiles"
       @close="showFileSelect = false"
       @input="loadFile"
     />
   </div>
-
 </template>
 
 <script>
@@ -85,7 +90,7 @@ import FileSelect from '@/components/FileSelect';
 import Toolbar from '@/components/Toolbar';
 
 import { debounce } from '@/util';
-import { generateKey, generateName, renameProgram, getProgram, saveProgram, allPrograms } from '@/io';
+import { allPrograms, generateKey, generateName, getProgram, renameProgram, saveProgram } from '@/io';
 import Parser from '@/parser';
 
 export default {
@@ -119,16 +124,16 @@ export default {
           action: this.newSketch
         },
         // {
-          // icon: 'download'
+        //   icon: 'download'
         // },
         // {
-          // icon: 'upload'
+        //   icon: 'upload'
         // },
         // {
-          // icon: 'file-export'
+        //   icon: 'file-export'
         // },
         // {
-          // icon: 'copy'
+        //   icon: 'copy'
         // }
       ],
 
@@ -137,18 +142,18 @@ export default {
       settings: {
         size: 20,
         clrs: {
-          b:  {name: 'blue',   rgb: [0,   0,   255]},
-          r:  {name: 'red',    rgb: [255, 0,   0]},
-          g:  {name: 'green',  rgb: [0,   255, 0]},
-          gr: {name: 'grey',   rgb: [80,  80,  80]},
-          y:  {name: 'yellow', rgb: [255, 255, 0]},
-          pu: {name: 'purple', rgb: [255, 0,   255]},
-          o:  {name: 'orange', rgb: [255, 125, 0]},
-          c:  {name: 'cyan',   rgb: [0,   255, 255]},
-          w:  {name: 'white',  rgb: [255, 255, 255]},
-          k:  {name: 'black',  rgb: [0,   0,   0]},
-          br: {name: 'brown',  rgb: [125, 80,  0]},
-          pi: {name: 'pink',   rgb: [255, 80, 125]}
+          b:  { name: 'blue',   rgb: [ 0,   0,   255 ] },
+          r:  { name: 'red',    rgb: [ 255, 0,   0 ] },
+          g:  { name: 'green',  rgb: [ 0,   255, 0 ] },
+          gr: { name: 'grey',   rgb: [ 80,  80,  80 ] },
+          y:  { name: 'yellow', rgb: [ 255, 255, 0 ] },
+          pu: { name: 'purple', rgb: [ 255, 0,   255 ] },
+          o:  { name: 'orange', rgb: [ 255, 125, 0 ] },
+          c:  { name: 'cyan',   rgb: [ 0,   255, 255 ] },
+          w:  { name: 'white',  rgb: [ 255, 255, 255 ] },
+          k:  { name: 'black',  rgb: [ 0,   0,   0 ] },
+          br: { name: 'brown',  rgb: [ 125, 80,  0 ] },
+          pi: { name: 'pink',   rgb: [ 255, 80, 125 ] }
         }
       },
 
@@ -197,9 +202,9 @@ export default {
 
     validate: debounce(function (string) {
       try {
-        let program = this.parser.parse(string).toArray();
+        const program = this.parser.parse(string).toArray();
 
-        for (let pixel of program) {
+        for (const pixel of program) {
           if (pixel && !this.clrs.hasOwnProperty(pixel)) {
             this.errorMessage = `Unknown colour '${pixel}'`;
             break;

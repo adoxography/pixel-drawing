@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 const PROGRAM_PFX = 'pixel-file-';
 

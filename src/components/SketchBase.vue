@@ -1,7 +1,7 @@
 <template>
   <div
-    class="p5-sketch"
     id="p5-sketch"
+    class="p5-sketch"
   />
 </template>
 

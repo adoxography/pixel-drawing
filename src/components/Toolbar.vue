@@ -2,7 +2,8 @@
   <div class="field">
     <span class="control">
       <a
-        v-for="button in buttons"
+        v-for="(button, index) in buttons"
+        :key="index"
         class="button icon"
         @click="handleClick(button.action)"
       >

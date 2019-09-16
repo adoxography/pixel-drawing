@@ -1,21 +1,21 @@
 <template>
   <div>
     <pixel-clr-table :clrs="value.clrs" />
-      <div class="field">
-        <label
-          class="label"
-          for="size-input"
-        >
-          Number of pixels
-        </label>
-        <input
-          id="size-input"
-          type="number"
-          class="input"
-          v-model.number="value.size"
-          @input="handleSizeInput($event.target.value)"
-        />
-      </div>
+    <div class="field">
+      <label
+        class="label"
+        for="size-input"
+      >
+        Number of pixels
+      </label>
+      <input
+        id="size-input"
+        v-model.number="value.size"
+        type="number"
+        class="input"
+        @input="handleSizeInput($event.target.value)"
+      >
+    </div>
   </div>
 </template>
 

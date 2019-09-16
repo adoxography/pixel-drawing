@@ -13,7 +13,6 @@ export default {
       pixelSize: 0,
       pixels: [],
       size: 0,
-      pixelSize: 0,
       frameRate: 16
     };
   },

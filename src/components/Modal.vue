@@ -1,16 +1,23 @@
 <template>
   <div class="modal is-active">
-    <div class="modal-background" @click="close" />
+    <div
+      class="modal-background"
+      @click="close"
+    />
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">
           {{ title }}
         </p>
-        <button class="delete" aria-label="close" @click="close" />
+        <button
+          class="delete"
+          aria-label="close"
+          @click="close"
+        />
       </header>
 
       <section class="modal-card-body">
-        <slot></slot>
+        <slot />
       </section>
 
       <footer class="modal-card-foot">

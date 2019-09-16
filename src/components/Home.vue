@@ -45,7 +45,7 @@ export default {
       return this.path === '/ref';
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
