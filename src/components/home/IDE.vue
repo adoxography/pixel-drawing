@@ -93,7 +93,7 @@ import { mapActions, mapGetters } from 'vuex';
 import programApi from '@/api/programs';
 import defaults from '@/defaults';
 import { debounce } from '@/util';
-import Parser from '@/parser';
+import parse from '@/parser';
 
 export default {
   components: {
@@ -114,7 +114,6 @@ export default {
       panelShown: true,
       showFileSelect: false,
       errorMessage: null,
-      parser: new Parser(),
 
       savedFiles: [],
 
@@ -181,7 +180,7 @@ export default {
 
     validate: debounce(function (string) {
       try {
-        const program = this.parser.parse(string).toArray();
+        const program = parse(string).toArray();
 
         for (const pixel of program) {
           if (pixel && !Object.prototype.hasOwnProperty.call(this.clrs, pixel)) {
@@ -196,7 +195,7 @@ export default {
 
     parse(string) {
       console.log(string);
-      const program = this.parser.parse(string).toArray();
+      const program = parse(string).toArray();
 
       if (program.some(pixel => {
         return pixel
