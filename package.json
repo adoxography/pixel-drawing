@@ -8,8 +8,8 @@
     "build": "cross-env NODE_ENV=production webpack",
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d dist",
-    "test": "mochapack --webpack-config webpack.config.js --require test/setup.js test/**/*.spec.js",
-    "devtest": "cross-env NODE_ENV=test mochapack --webpack-config webpack.config.js --require test/setup.js test/**/*.spec.js --watch"
+    "test": "cross-env NODE_ENV=testing mochapack --webpack-config webpack.config.js --require test/setup.js \"test/**/*.spec.js\"",
+    "devtest": "cross-env NODE_ENV=testing mochapack --webpack-config webpack.config.js --require test/setup.js \"test/**/*.spec.js\" --watch"
   },
   "repository": {
     "type": "git",
