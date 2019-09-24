@@ -8,8 +8,8 @@
  * Top-level expression. All well-formed programs have Sequence as their root node.
  */
 class Sequence {
-  constructor() {
-    this.commands = [];
+  constructor(commands) {
+    this.commands = commands || [];
   }
 
   add(command) {
@@ -43,9 +43,9 @@ class Pixel {
  * Runs a sequence a given number of times
  */
 class Loop {
-  constructor(number) {
-    this.number = number;
-    this.program = new Sequence();
+  constructor(number, commands) {
+    this.number = number || 1;
+    this.program = new Sequence(commands || []);
   }
 
   add(command) {
