@@ -6,10 +6,12 @@ const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const helpers = require('./helpers');
 const commonConfig = require('./webpack.config.common');
 const environment = require('./env/dev.env');
+const nodeExternals = require('webpack-node-externals');
+const isTest = process.env.NODE_ENV === 'testing';
 
 const webpackConfig = merge(commonConfig, {
   mode: 'development',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: isTest ? 'inline-cheap-module-source-map' : 'cheap-module-eval-source-map',
   output: {
     path: helpers.root('dist'),
     publicPath: '/',
@@ -39,5 +41,11 @@ const webpackConfig = merge(commonConfig, {
     }
   }
 });
+
+if (isTest) {
+  webpackConfig.externals = [ nodeExternals() ];
+  webpackConfig.output.devtoolModuleFilenameTemplate = '[absolute-resource-path]';
+  webpackConfig.output.devtoolFallbackModuleFilenameTemplate = '[absolute-resource-path]?[hash]';
+}
 
 module.exports = webpackConfig;

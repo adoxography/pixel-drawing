@@ -3,7 +3,11 @@
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "mocha": true
+  },
+  "globals": {
+    "expect": true
   },
   "parserOptions": {
     "parser": "babel-eslint",
@@ -15,7 +19,8 @@
     "plugin:vue/base",
     "plugin:vue/essential",
     "plugin:vue/strongly-recommended",
-    "plugin:vue/recommended"
+    "plugin:vue/recommended",
+    "plugin:mocha/recommended"
   ],
   "rules": {
     "array-bracket-spacing": [ "error", "always" ],
@@ -47,6 +52,7 @@
         "asyncArrow": "always"
     } ],
     "valid-typeof": "error",
+    "mocha/no-mocha-arrows": "off",
     "vue/no-v-html": 0,
     "vue/component-name-in-template-casing": ["error", "PascalCase",
       {
@@ -59,6 +65,7 @@
     ]
   },
   "plugins": [
-    "vue"
+    "vue",
+    "mocha"
   ]
 }

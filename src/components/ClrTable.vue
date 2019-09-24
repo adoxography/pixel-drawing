@@ -12,10 +12,18 @@
       <tr
         v-for="(clr, code) in clrs"
         :key="code"
+        class="clr-table-row"
       >
-        <td>{{ clr.name }}</td>
-        <td>{{ code }}</td>
-        <td :style="{'background-color': 'rgb('+clr.rgb.join(',')+')'}" />
+        <td class="clr-table-row-name">
+          {{ clr.name }}
+        </td>
+        <td class="clr-table-row-code">
+          {{ code }}
+        </td>
+        <td
+          class="clr-table-row-clr"
+          :style="{'background-color': 'rgb('+clr.rgb.join(',')+')'}"
+        />
       </tr>
     </tbody>
   </table>
