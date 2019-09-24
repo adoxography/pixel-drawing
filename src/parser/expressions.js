@@ -20,7 +20,7 @@ class Sequence {
     return this.commands.reduce((arr, command) => arr.concat(command.toArray()), []);
   }
 
-  length() {
+  get length() {
     return this.commands.length;
   }
 }
