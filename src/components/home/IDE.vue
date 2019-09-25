@@ -93,7 +93,7 @@ import { mapActions, mapGetters } from 'vuex';
 import programApi from '@/api/programs';
 import defaults from '@/defaults';
 import { debounce } from '@/util';
-import parse from '@/parser';
+import parse from '@/parsing';
 
 export default {
   components: {
