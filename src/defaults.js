@@ -1,28 +1,31 @@
 'use strict';
 
-const name = 'Jump Man';
-
-const frameRate = 16;
+const clrs = {
+  b:  { name: 'blue',   rgb: [ 0,   0,   255 ] },
+  r:  { name: 'red',    rgb: [ 255, 0,   0 ] },
+  g:  { name: 'green',  rgb: [ 0,   255, 0 ] },
+  gr: { name: 'grey',   rgb: [ 80,  80,  80 ] },
+  y:  { name: 'yellow', rgb: [ 255, 255, 0 ] },
+  pu: { name: 'purple', rgb: [ 255, 0,   255 ] },
+  o:  { name: 'orange', rgb: [ 255, 125, 0 ] },
+  c:  { name: 'cyan',   rgb: [ 0,   255, 255 ] },
+  w:  { name: 'white',  rgb: [ 255, 255, 255 ] },
+  k:  { name: 'black',  rgb: [ 0,   0,   0 ] },
+  br: { name: 'brown',  rgb: [ 125, 80,  0 ] },
+  pi: { name: 'pink',   rgb: [ 255, 80, 125 ] }
+};
 
 const settings = {
   size: 20,
-  clrs: {
-    b:  { name: 'blue',   rgb: [ 0,   0,   255 ] },
-    r:  { name: 'red',    rgb: [ 255, 0,   0 ] },
-    g:  { name: 'green',  rgb: [ 0,   255, 0 ] },
-    gr: { name: 'grey',   rgb: [ 80,  80,  80 ] },
-    y:  { name: 'yellow', rgb: [ 255, 255, 0 ] },
-    pu: { name: 'purple', rgb: [ 255, 0,   255 ] },
-    o:  { name: 'orange', rgb: [ 255, 125, 0 ] },
-    c:  { name: 'cyan',   rgb: [ 0,   255, 255 ] },
-    w:  { name: 'white',  rgb: [ 255, 255, 255 ] },
-    k:  { name: 'black',  rgb: [ 0,   0,   0 ] },
-    br: { name: 'brown',  rgb: [ 125, 80,  0 ] },
-    pi: { name: 'pink',   rgb: [ 255, 80, 125 ] }
-  }
+  frameRate: 16,
+  clrs
 };
 
-const program = `10[c g];
+const program = {
+  id: null,
+  updated: 0,
+  name: 'Jump Man',
+  text: `10[c g];
 10[g c];
 3[c g]     6r                    4[c g];
 2[g c] g   10r                   c 2[g c];
@@ -40,11 +43,12 @@ c g c      2y 8b 2y              g 2[c g];
 2[g c] g   3b g c 3b             c 3[g c];
 2[c g]     3k 2[g c] 3k          3[c g];
 g c g      4k 2[c g] 4k          c 2[g c];
-2[5[2gr 2br];]`;
+2[5[2gr 2br];]`,
+  settings
+};
 
 module.exports = {
+  program,
   settings,
-  frameRate,
-  name,
-  program
+  clrs
 };

@@ -2,25 +2,49 @@
   <div>
     <pixel-clr-table :clrs="value.clrs" />
     <div class="field">
-      <label
-        class="label"
-        for="size-input"
-      >
-        Number of pixels
-      </label>
-      <input
-        id="size-input"
-        v-model.number="value.size"
-        type="number"
-        class="input"
-        @input="handleSizeInput($event.target.value)"
-      >
+      <span class="control">
+        <label
+          class="label"
+          for="size-input"
+        >
+          Number of pixels
+        </label>
+        <input
+          id="size-input"
+          :value="value.size"
+          type="number"
+          class="input"
+          @input="updateSize($event.target.value)"
+        >
+      </span>
+    </div>
+
+    <div class="field">
+      <span class="control">
+        <label
+          class="label"
+          for="frame-rate-input"
+        >
+          Frame Rate
+        </label>
+        <input
+          id="frame-rate-input"
+          :value="value.frameRate"
+          type="range"
+          step="1"
+          min="1"
+          max="60"
+          class="slider"
+          @input="updateFrameRate($event.target.value)"
+        >
+      </span>
     </div>
   </div>
 </template>
 
 <script>
 import ClrTable from '@/components/ClrTable';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   components: {
@@ -32,18 +56,25 @@ export default {
       type: Object,
       default: () => {
         return {
-          size: 20,
-          clrs: {}
+          size: 0,
+          clrs: {},
+          frameRate: 0
         };
       }
     }
   },
 
   methods: {
-    handleSizeInput(newSize) {
-      const newValue = JSON.parse(JSON.stringify(this.value));
-      newValue.size = newSize;
-      this.$emit('input', newValue);
+    updateSize(newSize) {
+      const value = JSON.parse(JSON.stringify(this.value));
+      value.size = newSize;
+      this.$emit('input', value);
+    },
+
+    updateFrameRate(newFrameRate) {
+      const value = JSON.parse(JSON.stringify(this.value));
+      value.frameRate = parseInt(newFrameRate);
+      this.$emit('input', value);
     }
   }
 };

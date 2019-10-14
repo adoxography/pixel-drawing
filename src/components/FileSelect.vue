@@ -7,10 +7,11 @@
     <div class="select">
       <select v-model="selection">
         <option
-          v-for="option in options"
-          :key="option"
+          v-for="{id, name} in options"
+          :key="id"
+          :value="id"
         >
-          {{ option }}
+          {{ name }}
         </option>
       </select>
     </div>

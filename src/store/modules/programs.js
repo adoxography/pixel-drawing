@@ -1,126 +1,54 @@
-import programApi from '@/api/programs';
+import defaults from '@/defaults';
 
 const state = {
-  all: {
-    items: []
-  },
+  autoSave: false,
 
-  current: {}
+  all: []
 };
 
 const getters = {
-  allPrograms(state) {
-    return state.all.items;
-  },
-
-  currentName(state) {
-    return state.current.name;
-  },
-
-  currentSettings(state) {
-    return state.current.settings;
-  },
-
-  currentProgram(state) {
-    return state.current.program;
-  }
+  autoSave: state => state.autoSave,
+  current: state => state.current,
+  allPrograms: state => state.all,
+  maxId: state => state.all.reduce((m, v) => Math.max(m, v.id), 0),
+  lastProgram: state => state.all.reduce(
+    (m, v) => m.updated > v.updated ? m : v, defaults.program
+  )
 };
 
 const actions = {
-  getAllPrograms({ commit }) {
-    commit('getAllProgramsRequest');
-
-    programApi.allKeys()
-      .then(
-        keys => commit('getAllProgramsSuccess', keys),
-        error => commit('getAllProgramsFailure', error)
-      );
+  saveProgram({ commit }, data) {
+    commit('saveProgram', { data });
   },
 
-  saveProgram({ commit }, key, data) {
-    commit('saveProgramRequest', key);
-
-    programApi.saveProgram(key, data)
-      .then(
-        () => commit('saveProgramSuccess', key),
-        error => commit('saveProgramFailure', error)
-      );
+  loadProgram({ commit }, id) {
+    commit('loadProgram', { id });
   },
 
-  loadProgram({ commit }, key) {
-    commit('loadProgramRequest', key);
-
-    programApi.getProgram(key)
-      .then(
-        program => commit('loadProgramSuccess', program),
-        error => commit('loadProgramFailure', error)
-      );
-  },
-
-  renameProgram({ commit }, from, to) {
-    commit('renameProgramRequest', from, to);
-
-    programApi.rename(from, to)
-      .then(
-        () => commit('renameProgramSuccess', from, to),
-        error => commit('renameProgramFailure', error)
-      );
+  updateAutoSave({ commit }, value) {
+    commit('updateAutoSave', { value });
   }
 };
 
 const mutations = {
-  getAllProgramsRequest(state) {
-    state.all = { retrieving: true };
-  },
+  saveProgram(state, { data }) {
+    data = { ...data, updated: Date.now() };
+    const prevIdx = state.all.findIndex(program => program.id === data.id);
 
-  getAllProgramsSuccess(state, keys) {
-    state.all = { items: keys };
-  },
-
-  getAllProgramsFailure(state, error) {
-    state.all = { error };
-  },
-
-  saveProgramRequest(state, key) {},
-
-  saveProgramSuccess(state, key) {
-    if (!state.all.items) {
-      state.all.items = [];
-    }
-
-    state.all.items.push(key);
-  },
-
-  saveProgramFailure(state, error) {},
-
-  loadProgramRequest(state, key) {
-    state.current = { name: key };
-  },
-
-  loadProgramSuccess(state, program) {
-    state.current.data = program;
-  },
-
-  loadProgramFailure(state, error) {
-    state.current = { error };
-  },
-
-  renameProgramRequest(state, from, to) {},
-
-  renameProgramSuccess(state, from, to) {
-    if (!state.all.items) {
-      state.all.items = [];
-    }
-
-    for (let i = 0; i < state.all.items.length; i++) {
-      if (state.all.items[i] === from) {
-        state.all.items[i] = to;
-        break;
-      }
+    if (prevIdx < 0) {
+      state.all.push(data);
+    } else {
+      state.all[prevIdx] = data;
     }
   },
 
-  renameProgramFailure(state, error) {}
+  loadProgram(state, { id }) {
+    state.all.find(program => program.id === id).updated = Date.now();
+  },
+
+  updateAutoSave(state, { value }) {
+    state.autoSave = value;
+  }
 };
 
 export default {

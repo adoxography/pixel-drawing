@@ -15,22 +15,7 @@
 
             <transition name="slide-fade">
               <div v-if="panelShown">
-                <pixel-side-panel v-model="settings" />
-                <div class="field">
-                  <label class="label">
-                    Frame Rate
-                  </label>
-                  <p class="control">
-                    <input
-                      v-model.number="frameRate"
-                      type="range"
-                      step="1"
-                      min="1"
-                      max="60"
-                      class="slider"
-                    >
-                  </p>
-                </div>
+                <pixel-side-panel v-model="program.settings" />
               </div>
             </transition>
           </div>
@@ -42,21 +27,33 @@
           <div class="field">
             <span class="control">
               <input
-                v-model="name"
+                v-model="program.name"
                 class="input"
-                @blur="updateName($event.target.value)"
               >
             </span>
           </div>
 
           <div class="field">
-            <pixel-editor v-model="program" />
+            <pixel-editor v-model="program.text" />
             <p
               v-show="errorMessage"
               class="has-text-danger"
             >
               Error: {{ errorMessage }}
             </p>
+
+            <div class="field">
+              <span class="control">
+                <label class="checkbox">
+                  <input
+                    :checked="autoSave"
+                    type="checkbox"
+                    @input="updateAutoSave($event.target.checked)"
+                  >
+                  Auto Save
+                </label>
+              </span>
+            </div>
           </div>
 
           <button
@@ -75,9 +72,9 @@
 
     <pixel-file-select
       v-show="showFileSelect"
-      :options="savedFiles"
+      :options="allPrograms.map(p => {return {id: p.id, name: p.name}})"
       @close="showFileSelect = false"
-      @input="loadFile"
+      @input="handleLoadProgram($event)"
     />
   </div>
 </template>
@@ -90,7 +87,6 @@ import FileSelect from '@/components/FileSelect';
 import Toolbar from '@/components/Toolbar';
 import { mapActions, mapGetters } from 'vuex';
 
-import programApi from '@/api/programs';
 import defaults from '@/defaults';
 import { debounce } from '@/util';
 import parse from '@/parsing';
@@ -106,21 +102,16 @@ export default {
 
   data() {
     return {
-      name: defaults.name,
-      program: defaults.program,
-      settings: defaults.settings,
-      frameRate: defaults.frameRate,
-
       panelShown: true,
       showFileSelect: false,
       errorMessage: null,
 
-      savedFiles: [],
+      program: {},
 
       toolbarButtons: [
-        { icon: 'plus', title: 'New', action: this.newSketch },
-        // { icon: 'save', action: this.save },
-        // { icon: 'folder-open', action: this.handleOpenClicked },
+        { icon: 'plus', title: 'New', action: this.createNew },
+        { icon: 'save', title: 'Save',  action: this.save },
+        { icon: 'folder-open', title: 'Load', action: this.handleOpenClicked },
         // { icon: 'download' },
         // { icon: 'upload' },
         // { icon: 'file-export' },
@@ -130,47 +121,51 @@ export default {
   },
 
   computed: {
-    ...mapGetters('programs', [ 'allPrograms' ])
+    ...mapGetters('programs', [
+      'autoSave',
+      'allPrograms',
+      'maxId',
+      'lastProgram'
+    ])
+  },
+
+  watch: {
+    program: {
+      handler() { this.autoSave && this.save(); },
+      deep: true
+    }
   },
 
   created() {
-    const name = localStorage.getItem('pixel-last-program');
-
-    if (name !== null) {
-      this.loadFile(name);
-    }
-
-    this.savedFiles = this.allPrograms;
+    this.program = JSON.parse(JSON.stringify(this.lastProgram));
   },
 
   mounted() {
-    this.getAllPrograms();
     this.render();
   },
 
   methods: {
     ...mapActions('programs', [
       'saveProgram',
-      'renameProgram',
-      'getAllPrograms'
+      'loadProgram',
+      'updateAutoSave'
     ]),
 
     render() {
-      const pixels = this.parse(this.program);
+      const pixels = this.parse(this.program.text);
 
       if (pixels) {
         this.$refs.sketch.render(
           pixels,
-          this.settings.size,
-          this.frameRate
+          this.program.settings.size,
+          this.program.settings.frameRate
         );
-        // this.save(this.program);
       }
     },
 
     onInput(e) {
       this.errorMessage = null;
-      this.validate(this.program);
+      this.validate(this.program.text);
     },
 
     validate: debounce(function (string) {
@@ -178,7 +173,7 @@ export default {
         const program = parse(string).toArray();
 
         for (const pixel of program) {
-          if (pixel && !Object.prototype.hasOwnProperty.call(this.clrs, pixel)) {
+          if (pixel && !Object.prototype.hasOwnProperty.call(this.program.settings.clrs, pixel)) {
             this.errorMessage = `Unknown colour '${pixel}'`;
             break;
           }
@@ -194,46 +189,38 @@ export default {
 
       if (program.some(pixel => {
         return pixel
-          && !Object.prototype.hasOwnProperty.call(this.settings.clrs, pixel);
+          && !Object.prototype.hasOwnProperty.call(this.program.settings.clrs, pixel);
       })) {
         return null;
       }
 
-      return program.map(c => c ? this.settings.clrs[c].rgb : null);
+      return program.map(c => c ? this.program.settings.clrs[c].rgb : null);
+    },
+
+    createNew() {
+      this.program = {
+        id: null,
+        name: 'Untitled',
+        text: '',
+        settings: JSON.parse(JSON.stringify(defaults.settings))
+      };
     },
 
     save() {
-      this.saveProgram(this.name, {
-        program: this.program,
-        settings: this.settings
-      });
-
-      localStorage.setItem('pixel-last-program', this.name);
+      if (!this.program.id) {
+        this.program.id = this.maxId + 1;
+      }
+      this.saveProgram(this.program);
     },
 
     handleOpenClicked() {
       this.showFileSelect = true;
     },
 
-    loadFile(name) {
-      programApi.getProgram(name)
-        .then(programData => {
-          this.program = programData.program;
-          this.settings = programData.settings;
-          this.name = name;
-          this.showFileSelect = false;
-          localStorage.setItem('pixel-last-program', name);
-        });
-    },
-
-    newSketch() {
-      this.name = 'Untitled';
-      this.program = '';
-      this.save();
-    },
-
-    updateName(newName) {
-      this.renameProgram(this.name, newName);
+    handleLoadProgram(id) {
+      this.showFileSelect = false;
+      this.loadProgram(id);
+      this.program = this.allPrograms.find(program => program.id === id);
     }
   }
 };
