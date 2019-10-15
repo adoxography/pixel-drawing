@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VuexPersist from 'vuex-persist';
+import VuexPersist from 'vuex-persist/dist/umd';
 import programs from './modules/programs';
 
 const debug = process.env.NODE_ENV !== 'production';
