@@ -8,7 +8,11 @@ This program is based on an unplugged activity called [Pixel Programming](https:
 Pixel drawing is hosted on github; you can work with it online [here](https://adoxography.github.io/pixel-drawing).
 
 ### Offline
-The entire program is self-contained in the repository. Just download it (e.g. `git clone https://github.com/adoxography/pixel-drawing`) and open `index.html` in your browser of choice.
+An offline version of `pixel-drawing` can be downloaded from the [releases](https://github.com/adoxography/pixel-drawing/releases/latest) page. Just download the zip file and open `index.html` in your browser of choice.
+
+### Building locally
+
+Install the dependencies with `yarn install` or `npm install`, then run the dev server with `yarn run dev` or `npm run dev`. Build for production with `yarn run build` or `npm run build`.
 
 ## Syntax
 See [syntax.md](docs/syntax.md)
