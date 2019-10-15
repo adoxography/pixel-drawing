@@ -1,18 +1,18 @@
 'use strict';
 
 const clrs = {
-  b:  { name: 'blue',   rgb: [ 0,   0,   255 ] },
-  r:  { name: 'red',    rgb: [ 255, 0,   0 ] },
-  g:  { name: 'green',  rgb: [ 0,   255, 0 ] },
-  gr: { name: 'grey',   rgb: [ 80,  80,  80 ] },
-  y:  { name: 'yellow', rgb: [ 255, 255, 0 ] },
-  pu: { name: 'purple', rgb: [ 255, 0,   255 ] },
-  o:  { name: 'orange', rgb: [ 255, 125, 0 ] },
-  c:  { name: 'cyan',   rgb: [ 0,   255, 255 ] },
-  w:  { name: 'white',  rgb: [ 255, 255, 255 ] },
-  k:  { name: 'black',  rgb: [ 0,   0,   0 ] },
-  br: { name: 'brown',  rgb: [ 125, 80,  0 ] },
-  pi: { name: 'pink',   rgb: [ 255, 80, 125 ] }
+  b:  { rgb: [ 0,   0,   255 ] },
+  r:  { rgb: [ 255, 0,   0 ] },
+  g:  { rgb: [ 0,   255, 0 ] },
+  gr: { rgb: [ 80,  80,  80 ] },
+  y:  { rgb: [ 255, 255, 0 ] },
+  pu: { rgb: [ 255, 0,   255 ] },
+  o:  { rgb: [ 255, 125, 0 ] },
+  c:  { rgb: [ 0,   255, 255 ] },
+  w:  { rgb: [ 255, 255, 255 ] },
+  k:  { rgb: [ 0,   0,   0 ] },
+  br: { rgb: [ 125, 80,  0 ] },
+  pi: { rgb: [ 255, 80, 125 ] }
 };
 
 const settings = {

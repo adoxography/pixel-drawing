@@ -17,18 +17,4 @@ const clrs = {
 };
 
 describe('ClrTable.vue', () => {
-  it('maps colour names', () => {
-    const wrapper = factory({ clrs });
-    expect(wrapper.find('.clr-table-row-name').text()).toBe('red');
-  });
-
-  it('maps colour codes', () => {
-    const wrapper = factory({ clrs });
-    expect(wrapper.find('.clr-table-row-code').text()).toBe('r');
-  });
-
-  it('maps colour styles', () => {
-    const wrapper = factory({ clrs });
-    expect(wrapper.find('.clr-table-row-clr').element.style['background-color']).toBe('rgb(255, 0, 0)');
-  });
 });

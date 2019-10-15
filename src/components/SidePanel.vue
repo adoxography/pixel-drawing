@@ -1,6 +1,21 @@
 <template>
   <div>
-    <pixel-clr-table :clrs="value.clrs" />
+    <div class="field">
+      <div class="control">
+        <label
+          class="label"
+          for="clr-table"
+        >
+          Available colours
+        </label>
+
+        <pixel-clr-table
+          id="clr-table"
+          :clrs="value.clrs"
+        />
+      </div>
+    </div>
+
     <div class="field">
       <span class="control">
         <label
