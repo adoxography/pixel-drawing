@@ -4,11 +4,19 @@ import VuexPersist from 'vuex-persist/dist/umd';
 import programs from './modules/programs';
 
 const debug = process.env.NODE_ENV !== 'production';
+const storageKey = 'pixel-drawing';
+
+// Make sure the storage is as it's expected to be; if it isn't, remove
+// whatever is there.
+const data = localStorage.getItem(storageKey);
+if (data && !Object.prototype.hasOwnProperty.call(data, 'programs')) {
+  localStorage.removeItem(storageKey);
+}
 
 Vue.use(Vuex);
 
 const vuexPersist = new VuexPersist({
-  key: 'pixel-drawing',
+  key: storageKey,
   storage: window.localStorage
 });
 
