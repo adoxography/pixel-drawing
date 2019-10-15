@@ -4,9 +4,10 @@
       v-for="(button, index) in buttons"
       :key="index"
       :title="button.title"
+      :disabled="button.disabled ? button.disabled() : false"
       class="button icon is-medium"
       @click="handleClick(button.action)"
-      >
+    >
       <i
         class="fas"
         :class="'fa-'+button.icon"

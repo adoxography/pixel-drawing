@@ -105,13 +105,27 @@ export default {
       panelShown: true,
       showFileSelect: false,
       errorMessage: null,
+      dirty: false,
 
-      program: {},
+      program: null,
 
       toolbarButtons: [
-        { icon: 'plus', title: 'New', action: this.createNew },
-        { icon: 'save', title: 'Save',  action: this.save },
-        { icon: 'folder-open', title: 'Load', action: this.handleOpenClicked },
+        {
+          icon: 'plus',
+          title: 'New',
+          action: this.createNew
+        },
+        {
+          icon: 'save',
+          title: 'Save',
+          action: this.save,
+          disabled: () => !this.dirty
+        },
+        {
+          icon: 'folder-open',
+          title: 'Load',
+          action: this.handleOpenClicked
+        },
         // { icon: 'download' },
         // { icon: 'upload' },
         // { icon: 'file-export' },
@@ -131,13 +145,19 @@ export default {
 
   watch: {
     program: {
-      handler() { this.autoSave && this.save(); },
+      handler(_, oldProgram) {
+        if (oldProgram) {
+          this.dirty = true;
+          this.autoSave && this.save();
+        }
+      },
       deep: true
     }
   },
 
   created() {
     this.program = JSON.parse(JSON.stringify(this.lastProgram));
+    this.dirty = false;
   },
 
   mounted() {
@@ -211,6 +231,7 @@ export default {
         this.program.id = this.maxId + 1;
       }
       this.saveProgram(this.program);
+      this.dirty = false;
     },
 
     handleOpenClicked() {
