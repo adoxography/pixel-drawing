@@ -31,7 +31,7 @@ export default {
     formattedValue() {
       return this.value.replace(/\d*([a-z]+)/g, (match, clrCode) => {
         if ({}.hasOwnProperty.call(this.clrs, clrCode)) {
-          const clr = this.clrs[clrCode].rgb.join(',');
+          const clr = this.clrs[clrCode].rgb.map(c => c * 0.75).join(',');
           if (this.syntaxHighlighting) {
             return `<span style="color: rgb(${clr});">${match}</span>`;
           } else {
