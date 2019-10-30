@@ -40,33 +40,36 @@ export default {
 
     setCaret(pos) {
       const el = this.$el;
-      const range = document.createRange();
       const sel = document.getSelection();
+      const range = this.findRange(el, pos);
 
-      this.setStartOfRange(range, el, pos);
-
-      range.collapse(true);
       sel.removeAllRanges();
       sel.addRange(range);
     },
 
-    setStartOfRange(range, el, pos) {
+    findRange(el, pos) {
       let index = 0;
 
       for (const node of el.childNodes) {
         const length = node.length || node.innerText.length;
-        if (index + length > pos) {
-          if (node.nodeType === Node.TEXT_NODE) {
-            range.setStart(node, pos - index);
-          } else {
-            this.setStartOfRange(range, node, pos - index);
+
+        if (index + length >= pos) {
+          if (node.nodeType !== Node.TEXT_NODE) {
+            return this.findRange(node, pos - index);
           }
 
-          break;
+          return this.createRange(node, pos - index);
         }
 
-        index+= length;
+        index += length;
       }
+    },
+
+    createRange(node, index) {
+      const range = document.createRange();
+      range.setStart(node, index);
+      range.collapse(true);
+      return range;
     }
   }
 };
