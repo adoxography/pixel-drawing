@@ -37,6 +37,7 @@
             <pixel-editor
               v-model="program.text"
               :clrs="program.settings.clrs"
+              @input="handleInput"
             />
             <p
               v-show="errorMessage"
@@ -186,17 +187,18 @@ export default {
       }
     },
 
-    onInput(e) {
+    handleInput(e) {
       this.errorMessage = null;
       this.validate(this.program.text);
     },
 
     validate: debounce(function (string) {
+      console.log('validating');
       try {
         const program = parse(string).toArray();
 
         for (const pixel of program) {
-          if (pixel && !Object.prototype.hasOwnProperty.call(this.program.settings.clrs, pixel)) {
+          if (pixel && !{}.hasOwnProperty.call(this.program.settings.clrs, pixel)) {
             this.errorMessage = `Unknown colour '${pixel}'`;
             break;
           }
@@ -211,8 +213,7 @@ export default {
       const program = parse(string).toArray();
 
       if (program.some(pixel => {
-        return pixel
-          && !Object.prototype.hasOwnProperty.call(this.program.settings.clrs, pixel);
+        return pixel && !{}.hasOwnProperty.call(this.program.settings.clrs, pixel);
       })) {
         return null;
       }
