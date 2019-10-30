@@ -9,6 +9,8 @@
 import ContentEditable from '@/components/ContentEditable';
 import { mapGetters } from 'vuex';
 
+const clr2rgb = clr => `rgb(${clr.rgb.map(c => c * 0.75).join(',')})`;
+
 export default {
   components: {
     'pixel-editable': ContentEditable
@@ -33,16 +35,16 @@ export default {
 
     formattedValue() {
       return this.value.replace(/\d*([a-z]+)/g, (match, clrCode) => {
-        if ({}.hasOwnProperty.call(this.clrs, clrCode)) {
-          const clr = this.clrs[clrCode].rgb.map(c => c * 0.75).join(',');
-          if (this.syntaxHighlighting) {
-            return `<span style="color: rgb(${clr});">${match}</span>`;
-          } else {
-            return match;
-          }
-        } else {
+        if (!{}.hasOwnProperty.call(this.clrs, clrCode)) {
           return match.replace(/.{1,5}/g, '<span class="err">$&</span>');
         }
+
+        if (this.syntaxHighlighting) {
+          const clr = this.clrs[clrCode];
+          return `<span style="color: ${clr2rgb(clr)};">${match}</span>`;
+        }
+
+        return match;
       });
     }
   },
