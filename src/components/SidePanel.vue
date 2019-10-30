@@ -54,12 +54,25 @@
         >
       </span>
     </div>
+
+    <div class="field">
+      <span class="control">
+        <label class="checkbox">
+          <input
+            :checked="syntaxHighlighting"
+            type="checkbox"
+            @input="updateSyntaxHighlighting($event.target.checked)"
+          >
+          Syntax Highlighting On
+        </label>
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
 import ClrTable from '@/components/ClrTable';
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   components: {
@@ -79,7 +92,17 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters('programs', [
+      'syntaxHighlighting'
+    ])
+  },
+
   methods: {
+    ...mapActions('programs', [
+      'updateSyntaxHighlighting'
+    ]),
+
     updateSize(newSize) {
       const value = JSON.parse(JSON.stringify(this.value));
       value.size = newSize;

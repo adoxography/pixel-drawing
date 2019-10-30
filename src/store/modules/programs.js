@@ -2,12 +2,14 @@ import defaults from '@/defaults';
 
 const state = {
   autoSave: false,
+  syntaxHighlighting: true,
 
   all: []
 };
 
 const getters = {
   autoSave: state => state.autoSave,
+  syntaxHighlighting: state => state.syntaxHighlighting,
   current: state => state.current,
   allPrograms: state => state.all,
   maxId: state => state.all.reduce((m, v) => Math.max(m, v.id), 0),
@@ -27,6 +29,10 @@ const actions = {
 
   updateAutoSave({ commit }, value) {
     commit('updateAutoSave', { value });
+  },
+
+  updateSyntaxHighlighting({ commit }, value) {
+    commit('updateSyntaxHighlighting', { value });
   }
 };
 
@@ -48,6 +54,10 @@ const mutations = {
 
   updateAutoSave(state, { value }) {
     state.autoSave = value;
+  },
+
+  updateSyntaxHighlighting(state, { value }) {
+    state.syntaxHighlighting = value;
   }
 };
 

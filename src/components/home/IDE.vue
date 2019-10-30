@@ -34,7 +34,10 @@
           </div>
 
           <div class="field">
-            <pixel-editor v-model="program.text" />
+            <pixel-editor
+              v-model="program.text"
+              :clrs="program.settings.clrs"
+            />
             <p
               v-show="errorMessage"
               class="has-text-danger"
