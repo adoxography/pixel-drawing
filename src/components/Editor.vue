@@ -1,16 +1,19 @@
 <template>
-  <div
-    contenteditable="true"
-    class="program-input textarea"
+  <pixel-editable
+    :value="formattedValue"
     @input="handleInput"
-    v-html="formattedValue"
   />
 </template>
 
 <script>
+import ContentEditable from '@/components/ContentEditable';
 import { mapGetters } from 'vuex';
 
 export default {
+  components: {
+    'pixel-editable': ContentEditable
+  },
+
   props: {
     value: {
       type: String,
@@ -46,56 +49,9 @@ export default {
 
   methods: {
     handleInput(e) {
-      const noMarkup = e.target.innerHTML.replace(/<.+?>/g, '');
-      const position = this.getCaretPosition();
+      const noMarkup = e.replace(/<.+?>/g, '');
 
       this.$emit('input', noMarkup);
-
-      this.$nextTick(() => {
-        this.setCaret(position);
-      });
-    },
-
-    setStartOfRange(range, el, pos) {
-      let index = 0;
-
-      for (const node of el.childNodes) {
-        const length = node.length || node.innerText.length;
-        if (index + length > pos) {
-          if (node.nodeType === Node.TEXT_NODE) {
-            range.setStart(node, pos - index);
-          } else {
-            this.setStartOfRange(range, node, pos - index);
-          }
-
-          break;
-        }
-
-        index+= length;
-      }
-    },
-
-    setCaret(pos) {
-      const el = this.$el;
-      const range = document.createRange();
-      const sel = document.getSelection();
-
-      this.setStartOfRange(range, el, pos);
-
-      range.collapse(true);
-      sel.removeAllRanges();
-      sel.addRange(range);
-    },
-
-    getCaretPosition() {
-      const el = this.$el;
-      const _range = document.getSelection().getRangeAt(0);
-      const range = _range.cloneRange();
-      
-      range.selectNodeContents(el);
-      range.setEnd(_range.endContainer, _range.endOffset);
-      
-      return range.toString().length;
     }
   }
 };
