@@ -151,11 +151,12 @@ export default {
 
   computed: {
     ...mapGetters('programs', [
-      'autoSave',
       'allPrograms',
       'maxId',
       'lastProgram'
-    ])
+    ]),
+
+    ...mapGetters([ 'autoSave' ])
   },
 
   created() {
@@ -173,6 +174,9 @@ export default {
       'loadProgram',
       'updateAutoSave'
     ]),
+
+    ...mapActions([ 'updateAutoSave' ]),
+
 
     render() {
       const pixels = this.parse(this.program.text);

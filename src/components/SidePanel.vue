@@ -93,15 +93,11 @@ export default {
   },
 
   computed: {
-    ...mapGetters('programs', [
-      'syntaxHighlighting'
-    ])
+    ...mapGetters([ 'syntaxHighlighting' ])
   },
 
   methods: {
-    ...mapActions('programs', [
-      'updateSyntaxHighlighting'
-    ]),
+    ...mapActions([ 'updateSyntaxHighlighting' ]),
 
     updateSize(newSize) {
       const value = JSON.parse(JSON.stringify(this.value));

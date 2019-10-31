@@ -29,9 +29,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters('programs', [
-      'syntaxHighlighting'
-    ]),
+    ...mapGetters([ 'syntaxHighlighting' ]),
 
     formattedValue() {
       return this.value.replace(/\d*([a-z]+)/g, (match, clrCode) => {
