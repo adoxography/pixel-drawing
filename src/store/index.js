@@ -8,8 +8,8 @@ const storageKey = 'pixel-drawing';
 
 // Make sure the storage is as it's expected to be; if it isn't, remove
 // whatever is there.
-const data = localStorage.getItem(storageKey);
-if (data && !Object.prototype.hasOwnProperty.call(data, 'programs')) {
+const data = JSON.parse(localStorage.getItem(storageKey));
+if (data && !{}.hasOwnProperty.call(data, 'programs')) {
   localStorage.removeItem(storageKey);
 }
 
