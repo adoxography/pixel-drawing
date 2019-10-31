@@ -59,18 +59,20 @@
               </span>
             </div>
           </div>
-
-          <button
-            class="draw-button button is-primary"
-            :disabled="errorMessage"
-            @click="render"
-          >
-            Draw!
-          </button>
         </div>
       </div>
     </div>
     <div class="column is-narrow">
+      <div class="field">
+        <button
+          class="draw-button button is-success"
+          :disabled="errorMessage"
+          @click="render"
+        >
+          Draw!
+        </button>
+      </div>
+
       <pixel-sketch ref="sketch" />
     </div>
 
