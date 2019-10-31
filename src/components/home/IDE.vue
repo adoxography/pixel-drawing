@@ -133,7 +133,8 @@ export default {
         {
           icon: 'folder-open',
           title: 'Load',
-          action: this.handleOpenClicked
+          action: this.handleOpenClicked,
+          disabled: () => this.allPrograms.length === 0
         },
         {
           icon: 'copy',
