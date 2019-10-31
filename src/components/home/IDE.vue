@@ -97,7 +97,7 @@ import Toolbar from '@/components/Toolbar';
 import { mapActions, mapGetters } from 'vuex';
 
 import defaults from '@/defaults';
-import { debounce } from '@/util';
+import { debounce, pushDownload } from '@/util';
 import parse from '@/parsing';
 
 export default {
@@ -141,8 +141,12 @@ export default {
           title: 'Duplicate',
           action: this.duplicate,
           disabled: () => this.program.id === null
-        }
-        // { icon: 'download' },
+        },
+        {
+          icon: 'download',
+          title: 'Download',
+          action: () => pushDownload(this.program.name + '.pxl', JSON.stringify(this.program))
+        },
         // { icon: 'upload' },
         // { icon: 'file-export' },
       ]
@@ -176,7 +180,6 @@ export default {
     ]),
 
     ...mapActions([ 'updateAutoSave' ]),
-
 
     render() {
       const pixels = this.parse(this.program.text);

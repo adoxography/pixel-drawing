@@ -31,8 +31,30 @@ const debounce = (func, delay) => {
  */
 const escape = s => s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
 
+/**
+ * Pushes a download onto the user
+ *
+ * @param filename  The name of the downloaded file
+ * @param data  The text of the file
+ */
+const pushDownload = (filename, data) => {
+  const blob = new Blob([ data ], { type: 'text/plain' });
+
+  if (window.navigator.msSaveOrOpenBlob) {
+    window.navigator.msSaveOrOpenBlob(blob, filename);
+  } else {
+    const el = document.createElement('a');
+    el.href = window.URL.createObjectURL(blob);
+    el.download = filename;
+    document.body.appendChild(el);
+    el.click();
+    document.body.removeChild(el);
+  }
+};
+
 module.exports = {
   array_last,
   debounce,
-  escape
+  escape,
+  pushDownload
 };
