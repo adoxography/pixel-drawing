@@ -135,10 +135,15 @@ export default {
           title: 'Load',
           action: this.handleOpenClicked
         },
+        {
+          icon: 'copy',
+          title: 'Duplicate',
+          action: this.duplicate,
+          disabled: () => this.program.id === null
+        }
         // { icon: 'download' },
         // { icon: 'upload' },
         // { icon: 'file-export' },
-        // { icon: 'copy' }
       ]
     };
   },
@@ -225,12 +230,24 @@ export default {
     },
 
     createNew() {
-      this.program = {
-        id: null,
-        name: 'Untitled',
-        text: '',
-        settings: JSON.parse(JSON.stringify(defaults.settings))
-      };
+      if (!this.dirty || confirm('Unsaved changes. Continue?')) {
+        this.program = {
+          id: null,
+          name: 'Untitled',
+          text: '',
+          settings: JSON.parse(JSON.stringify(defaults.settings))
+        };
+      }
+    },
+
+    duplicate() {
+      if (!this.dirty || confirm('Unsaved changes. Continue?')) {
+        const newProgram = JSON.parse(JSON.stringify(this.program));
+        newProgram.id = null;
+        newProgram.name += ' (2)';
+
+        this.program = newProgram;
+      }
     },
 
     save() {
