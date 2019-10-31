@@ -1,4 +1,5 @@
 const state = {
+  __VERSION__: '[AIV]{version}[/AIV]',
   autoSave: false,
   syntaxHighlighting: true
 };
