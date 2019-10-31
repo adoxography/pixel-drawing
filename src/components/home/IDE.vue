@@ -98,6 +98,7 @@ import { mapActions, mapGetters } from 'vuex';
 
 import defaults from '@/defaults';
 import { debounce, openFile, pushDownload } from '@/util';
+import { obj2txt, txt2obj } from '@/conversion';
 import parse from '@/parsing';
 
 export default {
@@ -214,12 +215,9 @@ export default {
 
     handleDownload() {
       const fileName = this.program.name + '.pxl';
-      const data = JSON.parse(JSON.stringify(this.program));
-      delete data.id;
-      delete data.updated;
-      data.__VERSION__ = window.__VERSION__;
+      const data = obj2txt(this.program);
 
-      pushDownload(fileName, JSON.stringify(data));
+      pushDownload(fileName, data);
     },
 
     handleUpload() {
@@ -229,9 +227,8 @@ export default {
 
       openFile(options).then(data => {
         if (!this.dirty || confirm('Unsaved changes. Continue?')) {
-          const program = JSON.parse(data);
-          program.id = null;
-
+          const program = txt2obj(data.body);
+          program.name = data.name.match(/^(.*)\..*$/)[1];
           this.program = program;
         }
       });

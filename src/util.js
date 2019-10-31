@@ -66,7 +66,7 @@ const openFile = ({ accept }) => {
   return new Promise((resolve, reject) => {
     el.onchange = e => {
       const file = e.target.files[0];
-      return extractTextFromFile(file).then(resolve);
+      return extractFromFile(file).then(resolve);
     };
 
     document.body.appendChild(el);
@@ -81,10 +81,16 @@ const openFile = ({ accept }) => {
  * @param file  The file to extract from
  * @return  A promise that resolves to the text of the file
  */
-const extractTextFromFile = file => {
+const extractFromFile = file => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = e => resolve(e.target.result);
+    reader.onload = e => {
+      const data = {
+        name: file.name,
+        body: e.target.result
+      };
+      resolve(data);
+    };
     reader.readAsText(file);
   });
 };
