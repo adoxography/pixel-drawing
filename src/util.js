@@ -52,9 +52,47 @@ const pushDownload = (filename, data) => {
   }
 };
 
+/**
+ * Prompts the user to select a file, then opens it and reads its contents
+ *
+ * @param options
+ * @return  A promise that resolves to the text of the file
+ */
+const openFile = ({ accept }) => {
+  const el = document.createElement('input');
+  el.type = 'file';
+  el.accept = accept;
+
+  return new Promise((resolve, reject) => {
+    el.onchange = e => {
+      const file = e.target.files[0];
+      return extractTextFromFile(file).then(resolve);
+    };
+
+    document.body.appendChild(el);
+    el.click();
+    document.body.removeChild(el);
+  });
+};
+
+/**
+ * Extracts the text from a local file descriptor
+ *
+ * @param file  The file to extract from
+ * @return  A promise that resolves to the text of the file
+ */
+const extractTextFromFile = file => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.readAsText(file);
+  });
+};
+
 module.exports = {
   array_last,
   debounce,
   escape,
-  pushDownload
+  pushDownload,
+  openFile
 };

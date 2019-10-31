@@ -97,7 +97,7 @@ import Toolbar from '@/components/Toolbar';
 import { mapActions, mapGetters } from 'vuex';
 
 import defaults from '@/defaults';
-import { debounce, pushDownload } from '@/util';
+import { debounce, openFile, pushDownload } from '@/util';
 import parse from '@/parsing';
 
 export default {
@@ -147,7 +147,11 @@ export default {
           title: 'Download',
           action: () => pushDownload(this.program.name + '.pxl', JSON.stringify(this.program))
         },
-        // { icon: 'upload' },
+        {
+          icon: 'upload',
+          title: 'Upload',
+          action: () => this.handleUpload()
+        },
         // { icon: 'file-export' },
       ]
     };
@@ -206,6 +210,21 @@ export default {
     handleChange(e) {
       this.dirty = true;
       this.autoSave && this.save();
+    },
+
+    handleUpload() {
+      const options = {
+        accept: '.pxl'
+      };
+
+      openFile(options).then(data => {
+        if (!this.dirty || confirm('Unsaved changes. Continue?')) {
+          const program = JSON.parse(data);
+          program.id = null;
+
+          this.program = program;
+        }
+      });
     },
 
     validate: debounce(function (string) {
