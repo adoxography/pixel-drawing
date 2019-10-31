@@ -145,7 +145,7 @@ export default {
         {
           icon: 'download',
           title: 'Download',
-          action: () => pushDownload(this.program.name + '.pxl', JSON.stringify(this.program))
+          action: this.handleDownload
         },
         {
           icon: 'upload',
@@ -210,6 +210,15 @@ export default {
     handleChange(e) {
       this.dirty = true;
       this.autoSave && this.save();
+    },
+
+    handleDownload() {
+      const fileName = this.program.name + '.pxl';
+      const data = JSON.parse(JSON.stringify(this.program));
+      delete data.id;
+      delete data.updated;
+
+      pushDownload(fileName, JSON.stringify(data));
     },
 
     handleUpload() {
