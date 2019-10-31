@@ -217,6 +217,7 @@ export default {
       const data = JSON.parse(JSON.stringify(this.program));
       delete data.id;
       delete data.updated;
+      data.__VERSION__ = window.__VERSION__;
 
       pushDownload(fileName, JSON.stringify(data));
     },
