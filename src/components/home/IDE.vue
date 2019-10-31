@@ -15,7 +15,10 @@
 
             <transition name="slide-fade">
               <div v-if="panelShown">
-                <pixel-side-panel v-model="program.settings" />
+                <pixel-side-panel
+                  v-model="program.settings"
+                  @input="handlePanelInput"
+                />
               </div>
             </transition>
           </div>
@@ -149,18 +152,6 @@ export default {
     ])
   },
 
-  watch: {
-    program: {
-      handler(_, oldProgram) {
-        if (oldProgram) {
-          this.dirty = true;
-          this.autoSave && this.save();
-        }
-      },
-      deep: true
-    }
-  },
-
   created() {
     this.program = JSON.parse(JSON.stringify(this.lastProgram));
     this.dirty = false;
@@ -192,6 +183,16 @@ export default {
     handleInput(e) {
       this.errorMessage = null;
       this.validate(this.program.text);
+      this.handleChange();
+    },
+
+    handlePanelInput(e) {
+      this.handleChange();
+    },
+
+    handleChange(e) {
+      this.dirty = true;
+      this.autoSave && this.save();
     },
 
     validate: debounce(function (string) {
