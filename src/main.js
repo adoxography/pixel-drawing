@@ -1,5 +1,11 @@
 'use strict';
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js');
+  });
+}
+
 import Vue from 'vue';
 
 import { dom, library } from '@fortawesome/fontawesome-svg-core';

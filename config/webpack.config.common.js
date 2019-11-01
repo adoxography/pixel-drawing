@@ -4,6 +4,7 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const WebpackAutoInject = require('webpack-auto-inject-version');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 const helpers = require('./helpers');
 const isDev = process.env.NODE_ENV === 'development';
 
@@ -89,6 +90,10 @@ const webpackConfig = {
       template: 'index.html',
       chunksSortMode: 'dependency',
       base: false
+    }),
+    new WorkboxPlugin.GenerateSW({
+      clientsClaim: true,
+      skipWaiting: true
     })
   ]
 };
