@@ -6,6 +6,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const helpers = require('./helpers');
 const commonConfig = require('./webpack.config.common');
@@ -62,6 +63,7 @@ const webpackConfig = merge(commonConfig, {
     }
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new webpack.EnvironmentPlugin(environment),
     new MiniCSSExtractPlugin({
       filename: 'css/[name].[hash].css',
