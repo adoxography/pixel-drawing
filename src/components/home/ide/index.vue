@@ -32,6 +32,7 @@
               <input
                 v-model="program.name"
                 class="input"
+                aria-label="Program name"
               >
             </span>
           </div>
@@ -69,10 +70,13 @@
       <div class="field">
         <button
           class="draw-button button is-success"
+          title="Draw!"
           :disabled="errorMessage"
           @click="render"
         >
-          Draw!
+          <span class="icon">
+            <i class="fas fa-flag"></i>
+          </span>
         </button>
       </div>
 

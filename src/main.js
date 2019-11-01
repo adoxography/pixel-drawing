@@ -7,6 +7,7 @@ import { dom, library } from '@fortawesome/fontawesome-svg-core';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons/faChevronRight';
 import { faCopy } from '@fortawesome/free-solid-svg-icons/faCopy';
 import { faDownload } from '@fortawesome/free-solid-svg-icons/faDownload';
+import { faFlag } from '@fortawesome/free-solid-svg-icons/faFlag';
 import { faFolderOpen } from '@fortawesome/free-solid-svg-icons/faFolderOpen';
 import { faPlus } from '@fortawesome/free-solid-svg-icons/faPlus';
 import { faSave } from '@fortawesome/free-solid-svg-icons/faSave';
@@ -26,6 +27,7 @@ library.add(
   faCopy,
   faDownload,
   faFolderOpen,
+  faFlag,
   faPlus,
   faSave,
   faUpload
