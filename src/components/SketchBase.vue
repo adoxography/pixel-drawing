@@ -6,8 +6,6 @@
 </template>
 
 <script>
-import p5 from 'p5';
-
 export default {
   props: {
     width: {
@@ -20,12 +18,10 @@ export default {
     }
   },
 
-  created() {
-    console.log('loaded!');
-  },
-
   mounted() {
-    this.p5 = new p5(this.initP5, 'p5-sketch');
+    import('p5').then(({ default: p5 }) => {
+      this.p5 = new p5(this.initP5, 'p5-sketch');
+    });
   },
 
   methods: {
