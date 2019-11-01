@@ -6,6 +6,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
 
 const helpers = require('./helpers');
 const commonConfig = require('./webpack.config.common');
@@ -74,7 +75,16 @@ const webpackConfig = merge(commonConfig, {
       threshold: 10240,
       minRatio: 0.8
     }),
-    new webpack.HashedModuleIdsPlugin()
+    new webpack.HashedModuleIdsPlugin(),
+    new WebpackPwaManifest({
+      name: 'Pixel Drawing',
+      short_name: 'Pixels',
+      description: 'Teaching basic programming concepts by drawing with pixels',
+      background_color: '#e7fdfb',
+      theme_color: '#ed3833',
+      crossorigin: 'use-credentials',
+      icons: []
+    })
   ]
 });
 
