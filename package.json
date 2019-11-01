@@ -1,6 +1,6 @@
 {
   "name": "pixel-drawing",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Teaching basic programming concepts by drawing with pixels",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --progress",
