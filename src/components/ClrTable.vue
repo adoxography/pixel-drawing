@@ -3,7 +3,7 @@
     <span
       v-for="(clr, code) in clrs"
       :key="code"
-      :style="{border: '10px solid rgb('+clr.rgb.join(',')+')'}"
+      :style="{border: '10px solid rgb('+clr.join(',')+')'}"
     >
       {{ code }}
     </span>

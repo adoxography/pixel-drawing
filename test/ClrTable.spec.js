@@ -10,10 +10,7 @@ const factory = (props = {}) => {
 };
 
 const clrs = {
-  r: {
-    name: 'red',
-    rgb: [ 255, 0, 0 ]
-  }
+  r: [ 255, 0, 0 ]
 };
 
 describe('ClrTable.vue', () => {

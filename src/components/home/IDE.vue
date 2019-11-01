@@ -260,7 +260,7 @@ export default {
         return null;
       }
 
-      return program.map(c => c ? this.program.settings.clrs[c].rgb : null);
+      return program.map(c => this.program.settings.clrs[c]);
     },
 
     createNew() {

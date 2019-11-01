@@ -9,7 +9,7 @@
 import ContentEditable from '@/components/ContentEditable';
 import { mapGetters } from 'vuex';
 
-const clr2rgb = clr => `rgb(${clr.rgb.map(c => c * 0.75).join(',')})`;
+const clr2rgb = clr => `rgb(${clr.map(c => c * 0.75).join(',')})`;
 
 export default {
   components: {

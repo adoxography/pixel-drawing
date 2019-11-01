@@ -28,7 +28,7 @@ function obj2txt(obj) {
 
   for (const [ key, value ] of Object.entries(obj.settings.clrs)) {
     if ({}.hasOwnProperty.call(obj.settings.clrs, key)) {
-      lines.push(`$${key}: rgb(${value.rgb.join(', ')})`);
+      lines.push(`$${key}: ${value.rgb.join(', ')}`);
     }
   }
 
@@ -83,14 +83,12 @@ function _handleConstant(obj, line) {
 
 function _handleClr(obj, line) {
   const { key, value } = _splitLine(line);
-  const clrMatch = value.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-  obj[key] = {
-    rgb: [
-      parseInt(clrMatch[1]),
-      parseInt(clrMatch[2]),
-      parseInt(clrMatch[3]),
-    ]
-  };
+  const clrMatch = value.match(/^(\d+),\s*(\d+),\s*(\d+)$/);
+  obj[key] = [
+    parseInt(clrMatch[1]),
+    parseInt(clrMatch[2]),
+    parseInt(clrMatch[3]),
+  ];
 }
 
 function _splitLine(line) {
