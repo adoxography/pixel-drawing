@@ -76,7 +76,11 @@
         </button>
       </div>
 
-      <pixel-sketch ref="sketch" />
+      <pixel-sketch
+        ref="sketch"
+        :size="program.settings.size"
+        :frame-rate="program.settings.frameRate"
+      />
     </div>
 
     <pixel-file-select
@@ -90,7 +94,7 @@
 
 <script>
 import SidePanel from '@/components/SidePanel';
-import Sketch from '@/components/Sketch';
+import Sketch from '@/components/Canvas';
 import Editor from '@/components/Editor';
 import FileSelect from '@/components/FileSelect';
 import Toolbar from '@/components/Toolbar';
@@ -190,11 +194,7 @@ export default {
       const pixels = this.parse(this.program.text);
 
       if (pixels) {
-        this.$refs.sketch.render(
-          pixels,
-          this.program.settings.size,
-          this.program.settings.frameRate
-        );
+        this.$refs.sketch.render(pixels);
       }
     },
 
@@ -235,7 +235,6 @@ export default {
     },
 
     validate: debounce(function (string) {
-      console.log('validating');
       try {
         const program = parse(string).toArray();
 
@@ -251,7 +250,6 @@ export default {
     }, 500),
 
     parse(string) {
-      console.log(string);
       const program = parse(string).toArray();
 
       if (program.some(pixel => {
