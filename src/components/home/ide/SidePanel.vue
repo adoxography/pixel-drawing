@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import ClrTable from '@/components/ClrTable';
+import ClrTable from './ClrTable';
 import { mapActions, mapGetters } from 'vuex';
 
 export default {

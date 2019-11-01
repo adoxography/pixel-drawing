@@ -3,10 +3,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Home from '@/components/Home';
-import IDE from '@/components/home/IDE';
-import About from '@/components/home/About';
-import Reference from '@/components/home/Reference';
+import Home from '@/components/home';
+import IDE from '@/components/home/ide';
+import About from '@/components/home/about';
+import Reference from '@/components/home/reference';
 
 Vue.use(VueRouter);
 

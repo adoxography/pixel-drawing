@@ -93,11 +93,11 @@
 </template>
 
 <script>
-import SidePanel from '@/components/SidePanel';
-import Sketch from '@/components/Canvas';
-import Editor from '@/components/Editor';
-import FileSelect from '@/components/FileSelect';
-import Toolbar from '@/components/Toolbar';
+import SidePanel from './SidePanel';
+import Sketch from './Canvas';
+import Editor from './Editor';
+import Toolbar from './Toolbar';
+import FileSelect from '@/components/util/FileSelect';
 import { mapActions, mapGetters } from 'vuex';
 
 import defaults from '@/defaults';
