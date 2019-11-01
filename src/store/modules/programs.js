@@ -17,8 +17,8 @@ const actions = {
     commit('saveProgram', { data });
   },
 
-  loadProgram({ commit }, id) {
-    commit('loadProgram', { id });
+  tapProgram({ commit }, id) {
+    commit('tapProgram', { id });
   }
 };
 
@@ -34,7 +34,7 @@ const mutations = {
     }
   },
 
-  loadProgram(state, { id }) {
+  tapProgram(state, { id }) {
     state.all.find(program => program.id === id).updated = Date.now();
   }
 };

@@ -98,7 +98,7 @@ import { mapActions, mapGetters } from 'vuex';
 
 import defaults from '@/defaults';
 import { debounce, openFile, pushDownload } from '@/util';
-import { obj2txt, txt2obj } from '@/conversion';
+import { Program } from '@/program';
 import parse from '@/parsing';
 
 export default {
@@ -169,7 +169,7 @@ export default {
   },
 
   created() {
-    this.program = JSON.parse(JSON.stringify(this.lastProgram));
+    this.program = new Program(this.lastProgram);
     this.dirty = false;
   },
 
@@ -180,7 +180,7 @@ export default {
   methods: {
     ...mapActions('programs', [
       'saveProgram',
-      'loadProgram',
+      'tapProgram',
       'updateAutoSave'
     ]),
 
@@ -215,7 +215,7 @@ export default {
 
     handleDownload() {
       const fileName = this.program.name + '.pxl';
-      const data = obj2txt(this.program);
+      const data = this.program.toString();
 
       pushDownload(fileName, data);
     },
@@ -227,7 +227,7 @@ export default {
 
       openFile(options).then(data => {
         if (!this.dirty || confirm('Unsaved changes. Continue?')) {
-          const program = txt2obj(data.body);
+          const program = Program.parse(data.body);
           program.name = data.name.match(/^(.*)\..*$/)[1];
           this.program = program;
         }
@@ -265,18 +265,13 @@ export default {
 
     createNew() {
       if (!this.dirty || confirm('Unsaved changes. Continue?')) {
-        this.program = {
-          id: null,
-          name: 'Untitled',
-          text: '',
-          settings: JSON.parse(JSON.stringify(defaults.settings))
-        };
+        this.program = new Program();
       }
     },
 
     duplicate() {
       if (!this.dirty || confirm('Unsaved changes. Continue?')) {
-        const newProgram = JSON.parse(JSON.stringify(this.program));
+        const newProgram = this.program.clone();
         newProgram.id = null;
         newProgram.name += ' (2)';
 
@@ -298,8 +293,9 @@ export default {
 
     handleLoadProgram(id) {
       this.showFileSelect = false;
-      this.loadProgram(id);
-      this.program = this.allPrograms.find(program => program.id === id);
+      this.tapProgram(id);
+      const props = this.allPrograms.find(program => program.id === id);
+      this.program = new Program(props);
     }
   }
 };
